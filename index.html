@@ -3,9 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>FastFlight</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="style.css" />
 </head>
 <body>
+    <header>
+        <img src="assets/logo.png"></img>
+        <h2 class="header-text">Vuelos baratos al mejor precio.</h2>
+    </header>
+    <main>
+        <div class="SearchControls_grid">
+            <div class="OriginDesktopSearchControlGroup_autoSuggestContainer">
+                <label id="originInput-label" for="originInput-input" aria-label="Introduce la ciudad desde donde sales">
+                    <div class="AutoSuggest_inputTextWrapper">
+                        <span class="OriginDesktopSearchControlGroup_inputLabel">Desde</span>
+                        <div class="AutoSuggest_inputWrapper">
+                            <input aria-activedescendant="" aria-autocomplete="list" aria-controls="originInput-menu" aria-expanded="false" aria-labelledby="originInput-label" autocomplete="off" id="originInput-input" role="combobox" type="text" autocapitalize="on" autocorrect="off" placeholder="País, ciudad o aeropuerto" spellcheck="false" maxlength="256" enterkeyhint="Buscar" value="Buenos Aires (Todos)">
+                        </div>
+                    </div>
+                </label>
+            </div>
+            <div class="DestinationSearchControlsGroup_autoSuggestContainer">
+                <label id="destinationInput-label" for="destinationInput-input" aria-label=". Introduce tu destino">
+                <div class="AutoSuggest_inputTextWrapper">
+                    <span>A</span>
+                        <div class="AutoSuggest_inputWrapper">
+                            <input aria-activedescendant="" aria-autocomplete="list" aria-controls="destinationInput-menu" aria-expanded="false" aria-labelledby="destinationInput-label" autocomplete="off" id="destinationInput-input" role="combobox" type="text" autocapitalize="on" autocorrect="off" placeholder="País, ciudad o aeropuerto" spellcheck="false" maxlength="256" value="">
+                        </div>
+                </div>
+                </label>
+                <div class="AutoSuggest_suggestionsContainer">
+                    <ul id="destinationInput-menu" role="listbox" aria-labelledby="destinationInput-label" class="AutoSuggest_suggestionsList__OWRjM AutoSuggest_desktopSuggestionsList__NGQ5Y"></ul>
+                </div>
+            </div>
+            <div class="DateSearchControlsGroup_datesContaine">
+                <div class="DateSearchControlsGroup_datesSearchControlButton SearchControlButton_container" tabindex="-1">
+                    <button type="button" class="DateSearchControlsGroup_datesSearchControlButton" data-testid="depart-btn">
+                        <span class="SearchControlButton_label">Fecha</span>
+                        <div class="Date_inputWrapper">
+                            <input aria-activedescendant="" aria-autocomplete="list" aria-controls="dateInput-menu" aria-expanded="false" aria-labelledby="dateInput-label" autocomplete="off" id="dateInput-input" role="combobox" type="text" autocapitalize="on" autocorrect="off" placeholder="Fecha" spellcheck="false" maxlength="256" value="">
+                        </div>
+                    </button>
+                </div>
+             </div>
+             <div class="CabinClassTravellerSearchControlGroup_travellerContainer">
+                <div class="CabinClassTravellerSearchControlGroup_traveller SearchControlButton_container" tabindex="-1">
+                    <button type="button" class="SearchControlButton_searchControlBtn CabinClassTravellerSearchControlGroup_traveller" aria-label="1 Adulto, Turista" data-testid="traveller-button">
+                        <span class="SearchControlButton_value">Viajeros y clase de cabina</span>
+                        <div class="Cabin_inputWrapper">
+                            <input aria-activedescendant="" aria-autocomplete="list" aria-controls="cabinInput-menu" aria-expanded="false" aria-labelledby="cabinInput-label" autocomplete="off" id="cabinInput-input" role="combobox" type="text" autocapitalize="on" autocorrect="off" placeholder="Pasajeros" spellcheck="false" maxlength="256" value="">
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div id="carouselExampleIndicators" class="carousel slide">
+            <div class="carousel-indicators">
+              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3" aria-label="Slide 4"></button>
+            </div>
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <img src="assets/1.jpg" class="d-block w-100" alt="Place 1">
+              </div>
+              <div class="carousel-item">
+                <img src="assets/2.jpg" class="d-block w-100" alt="Place 2">
+              </div>
+              <div class="carousel-item">
+                <img src="assets/3.jpg" class="d-block w-100" alt="Place 3">
+              </div>
+              <div class="carousel-item">
+                <img src="assets/4.jpg" class="d-block w-100" alt="Place 4">
+              </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+    </main>
+    <footer>
+        <div class="footer-text">© FastFlight 2023</div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
     <script src="main.js"></script>
 </body>
 </html>

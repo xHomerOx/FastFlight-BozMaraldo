@@ -1,0 +1,82 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@100&display=swap');
+
+* { 
+    margin: 0; 
+    padding: 0;
+    box-sizing: border-box;
+}
+
+header img{
+    background-color: #fff;
+    margin: 0 auto;
+    display: flex;
+    width: 320px;
+}
+
+.header-text{
+    background-color: #05203c;
+    color: #fff;
+    font-family: 'Raleway', sans-serif;
+    padding: 20px;
+    text-align: center;
+}
+
+.SearchControls_grid{
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    grid-gap: 0.25rem;
+    gap: 0.25rem;
+    justify-content: center;
+}
+
+.OriginDesktopSearchControlGroup_autoSuggestContainer, .DestinationSearchControlsGroup_autoSuggestContainer, .DateSearchControlsGroup_datesContaine, .CabinClassTravellerSearchControlGroup_travellerContainer{
+    position: relative;
+}
+
+#originInput-label{
+    border-radius: 0.75rem 0 0 0.75rem;
+    background-color: #fff;
+}
+
+#destinationInput-label{
+    border-radius: 0;
+    background-color: #fff;
+}
+
+.DateSearchControlsGroup_datesSearchControlButton{
+    display: block;
+    align-items: center;
+    border: none;
+    outline: none;
+    background-color: #fff;
+    text-align: left;
+    cursor: pointer;
+}
+
+.SearchControlButton_searchControlBtn{
+    display: block;
+    align-items: center;
+    border: none;
+    outline: none;
+    background-color: #fff;
+    text-align: left;
+    cursor: pointer;
+}
+
+.carousel-item{
+    height: 600px;
+}
+
+footer{
+    background-color: #05203c;
+    width: 100%;
+}
+
+.footer-text{
+    color: #fff;
+    font-family: 'Raleway', sans-serif;
+    text-align: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
