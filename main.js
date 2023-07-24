@@ -174,7 +174,7 @@ if (lang == "Spanish") {
 
     //Imprimo en el lugar de seleccion de vuelos.
     const main = document.getElementsByClassName("SearchControls_grid")[0];
-    const myFlightCoupon = "Sus datos son: " + "<br>" + "Origen: " + source + "<br>" + "Destino: " + destination + "<br>" + "Pasajero/s: " + passengerName + "<br>" + "Documento/s: " + identifier + "<br>" + "Número de vuelo: " + aeroCode + myFlightCode + "<br>" + "Que tenga un excelente viaje :)";
+    const myFlightCoupon = "Sus datos son: " + "<br>" + "Origen: " + userData[0] + "<br>" + "Destino: " + userData[1]  + "<br>" + "Fecha: " + userData[2] +  "<br>" + "Pasajero/s: " + userData[3] + "<br>" + "Documento/s: " + userData[4] + "<br>" + "Número de vuelo: " + userData[5] + "<br>" + "Que tenga un excelente viaje :)";
     main.innerHTML = myFlightCoupon;
 }else{
     alert("Welcome " + myName + " " + mySurName);
@@ -293,6 +293,6 @@ if (lang == "Spanish") {
     console.log(userData);
     
     const main = document.getElementsByClassName("SearchControls_grid")[0];
-    const myFlightCoupon = "Your information is: " + "<br>" + "Source: " + source + "<br>" + "Destination: " + destination + "<br>" + "Passenger/s: " + passengerName + "<br>" + "Passport/s: " + identifier + "<br>" + "Flight number: " + aeroCode + myFlightCode + "<br>" + "Have a good flight :)";
+    const myFlightCoupon = "Your information is: " + "<br>" + "Source: " + userData[0] + "<br>" + "Destination: " + userData[1] + "<br>" + "Date: " + userData[2] + "<br>" + "Passenger/s: " + userData[3] + "<br>" + "Passport/s: " + userData[4] + "<br>" + "Flight number: " + userData[5] + "<br>" + "Have a good flight :)";
     main.innerHTML = myFlightCoupon;
 }
