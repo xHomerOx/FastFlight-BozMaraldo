@@ -87,7 +87,7 @@ if (lang == "Spanish") {
     //Selecciono cantidad de pasajeros y repito si no es un numero.
     do{
         passengersAmount = +prompt("Seleccione la cantidad de pasajeros");
-    }while(isNaN(passengersAmount));
+    }while(isNaN(passengersAmount) || passengersAmount <= 0);
     let passengerName = [];
     let identifier = [];
 
@@ -117,7 +117,7 @@ if (lang == "Spanish") {
 
     //Selecciono aerolinea, si no es ninguna, flybondi sera la opcion por defecto.
     const selectAirline = () => {
-        let airline = prompt("Seleccione una aerolínea:");
+        let airline = prompt("Seleccione una aerolínea, las opciones disponibles son: " + american.name + "\n" + aerolineas.name + "\n" + delta.name + "\n" + virgin.name + "\n" + flybondi.name);
         let selectedAirline;
         if(!(airline == american.name || airline == aerolineas.name || airline == delta.name || airline == virgin.name)) {
             selectedAirline = flybondi.name;
@@ -217,7 +217,7 @@ if (lang == "Spanish") {
 
     do{
         passengersAmount = +prompt("Select ammount of passengers");
-    }while(isNaN(passengersAmount));
+    }while(isNaN(passengersAmount) || passengersAmount <= 0);
     let passengerName = [];
     let identifier = [];
 
@@ -243,7 +243,7 @@ if (lang == "Spanish") {
     const flybondi = new Airline("FlyBondi", "FO");
 
     const selectAirline = () => {
-        let airline = prompt("Select an airline:");
+        let airline = prompt("Select an airline, the available options are: " + american.name + "\n" + aerolineas.name + "\n" + delta.name + "\n" + virgin.name + "\n" + flybondi.name);
         let selectedAirline;
         if(!(airline == american.name || airline == aerolineas.name || airline == delta.name || airline == virgin.name)) {
             selectedAirline = flybondi.name;
