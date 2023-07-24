@@ -31,16 +31,20 @@ if (myCountry == defaultCountry){
 const flightFrom = ["Argentina", "Bolivia", "Brasil", "Chile", "Colombia", "Ecuador", "Guyana", "Paraguay", "Perú", "Suriname", "Uruguay", "Venezuela"];
 const flightTo = ["Argentina", "Bolivia", "Brasil", "Chile", "Colombia", "Ecuador", "Guyana", "Paraguay", "Perú", "Suriname", "Uruguay", "Venezuela"];
 
+//Para comparar lowercase use HOF.
+const newFlightFrom = flightFrom.map(flight => flight.toLowerCase());
+const newFlightTo = flightTo.map(flight => flight.toLowerCase());
+
 //Selecciona Idioma dependiendo de la variable.
 if (lang == "Spanish") {
     alert("Bienvenido " + myName + " " + mySurName);
     let selectSource = prompt("Seleccione un origen, las opciones disponibles son \n\n" + flightFrom.join("\n"));
     
     //Se fija si existe lo seleccionado con Includes, si da true sigue, si da false vuelve.
-    if (flightFrom.includes(selectSource)) {
+    if (flightFrom.includes(selectSource) || newFlightFrom.includes(selectSource)) {
         source = selectSource;
     }else{
-        while(!(flightFrom.includes(selectSource))) {
+        while(!(flightFrom.includes(selectSource)) || !(newFlightFrom.includes(selectSource))) {
             selectSource = prompt("Seleccione un origen, las opciones disponibles son \n\n" + flightFrom.join("\n"));
         }
         source = selectSource;
@@ -49,10 +53,10 @@ if (lang == "Spanish") {
     let selectDestination = prompt("Seleccione un destino, las opciones disponibles son \n\n" + flightTo.join("\n"));
 
     //Lo mismo que lo anterior pero con el destino.
-    if (flightTo.includes(selectDestination)) {
+    if (flightTo.includes(selectDestination) || newFlightTo.includes(selectDestination)) {
         destination = selectDestination;
     }else{
-        while(!(flightTo.includes(selectDestination))) {
+        while(!(flightTo.includes(selectDestination)) || !(newFlightTo.includes(selectDestination))) {
             selectDestination = prompt("Seleccione un origen, las opciones disponibles son \n\n" + flightTo.join("\n"));
         }
         destination = selectDestination;
@@ -117,7 +121,7 @@ if (lang == "Spanish") {
 
     //Selecciono aerolinea, si no es ninguna, flybondi sera la opcion por defecto.
     const selectAirline = () => {
-        let airline = prompt("Seleccione una aerolínea, las opciones disponibles son: " + american.name + "\n" + aerolineas.name + "\n" + delta.name + "\n" + virgin.name + "\n" + flybondi.name);
+        let airline = prompt("Seleccione una aerolínea, las opciones disponibles son: \n\n" + american.name + "\n" + aerolineas.name + "\n" + delta.name + "\n" + virgin.name + "\n" + flybondi.name);
         let selectedAirline;
         if(!(airline == american.name || airline == aerolineas.name || airline == delta.name || airline == virgin.name)) {
             selectedAirline = flybondi.name;
@@ -172,10 +176,10 @@ if (lang == "Spanish") {
     alert("Welcome " + myName + " " + mySurName);
     let selectSource = prompt("Select a source, the avaliable options are \n\n" + flightFrom.join("\n"));
     
-    if (flightFrom.includes(selectSource)) {
+    if (flightFrom.includes(selectSource) || newFlightFrom.includes(selectSource)) {
         source = selectSource;
     }else{
-        while(!(flightFrom.includes(selectSource))) {
+        while(!(flightFrom.includes(selectSource)) || (!(newFlightFrom.includes(selectSource)))) {
             selectSource = prompt("Select a source, the avaliable options are \n\n" + flightFrom.join("\n"));
         }
         source = selectSource;
@@ -183,10 +187,10 @@ if (lang == "Spanish") {
 
     let selectDestination = prompt("Select a destination, the avaliable options are \n\n" + flightTo.join("\n"));
     
-    if (flightTo.includes(selectDestination)) {
+    if (flightTo.includes(selectDestination) || newFlightTo.includes(selectDestination)) {
         destination = selectDestination;
     }else{
-        while(!(flightTo.includes(selectDestination))) {
+        while(!(flightTo.includes(selectDestination)) || (!(newFlightTo.includes(selectDestination)))) {
             selectDestination = prompt("Select a destination, the avaliable options are \n\n" + flightTo.join("\n"));
         }
         destination = selectDestination;
@@ -243,7 +247,7 @@ if (lang == "Spanish") {
     const flybondi = new Airline("FlyBondi", "FO");
 
     const selectAirline = () => {
-        let airline = prompt("Select an airline, the available options are: " + american.name + "\n" + aerolineas.name + "\n" + delta.name + "\n" + virgin.name + "\n" + flybondi.name);
+        let airline = prompt("Select an airline, the available options are: \n\n" + american.name + "\n" + aerolineas.name + "\n" + delta.name + "\n" + virgin.name + "\n" + flybondi.name);
         let selectedAirline;
         if(!(airline == american.name || airline == aerolineas.name || airline == delta.name || airline == virgin.name)) {
             selectedAirline = flybondi.name;
