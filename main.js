@@ -31,10 +31,12 @@ if (myCountry == defaultCountry){
 const flightFrom = ["Argentina", "Bolivia", "Brasil", "Chile", "Colombia", "Ecuador", "Guyana", "Paraguay", "Perú", "Suriname", "Uruguay", "Venezuela"];
 const flightTo = ["Argentina", "Bolivia", "Brasil", "Chile", "Colombia", "Ecuador", "Guyana", "Paraguay", "Perú", "Suriname", "Uruguay", "Venezuela"];
 
+//Selecciona Idioma dependiendo de la variable.
 if (lang == "Spanish") {
     alert("Bienvenido " + myName + " " + mySurName);
     let selectSource = prompt("Seleccione un origen, las opciones disponibles son \n\n" + flightFrom.join("\n"));
     
+    //Se fija si existe lo seleccionado con Includes, si da true sigue, si da false vuelve.
     if (flightFrom.includes(selectSource)) {
         source = selectSource;
     }else{
@@ -45,7 +47,8 @@ if (lang == "Spanish") {
     }
 
     let selectDestination = prompt("Seleccione un destino, las opciones disponibles son \n\n" + flightTo.join("\n"));
-    
+
+    //Lo mismo que lo anterior pero con el destino.
     if (flightTo.includes(selectDestination)) {
         destination = selectDestination;
     }else{
@@ -55,13 +58,146 @@ if (lang == "Spanish") {
         destination = selectDestination;
     }
 
+    //Saco la fecha actual.
     let currentDate = new Date(); 
     let year = currentDate.getFullYear();
     let month = currentDate.getMonth() + 1;
     let day = currentDate.getDate();
 
     let myDate = prompt("Seleccione fecha de vuelo:", day + "-" + month + "-" + year);
-    let dateChecker = 0;
+
+    let newDate = myDate.split("-");
+
+    //Tuve que crear nuevas fechas para seleccionar ya que si lo saco del currentDate va a fallar debido a que son valores fijos.
+    let newDay = newDate[0];
+    let newMonth = newDate[1];
+    let newYear = newDate[2];
+
+    //Chequeo que esten bien las fechas desde este momento.
+    while(newDay < 0 || newDay > 31 || newMonth < 0 || newMonth > 12 || newYear < 2023) {
+        myDate = prompt("Seleccione fecha de vuelo:", day + "-" + month + "-" + year);
+        newDate = myDate.split("-");
+        newDay = newDate[0];
+        newMonth = newDate[1];
+        newYear = newDate[2];
+    }
+
+    let passengersAmount;
+
+    //Selecciono cantidad de pasajeros y repito si no es un numero.
+    do{
+        passengersAmount = +prompt("Seleccione la cantidad de pasajeros");
+    }while(isNaN(passengersAmount));
+    let passengerName = [];
+    let identifier = [];
+
+    //Genero entradas dependiendo del numero de pasajeros.
+    for(let i=1; i<= passengersAmount; i++){
+        passengerName[i - 1] = prompt("Ingrese nombre de pasajero:");
+        identifier[i - 1] = +prompt("Ingrese número de documento/pasaporte:");
+        while(isNaN(identifier[i - 1])){
+            identifier[i - 1] = +prompt("Ingrese número de documento/pasaporte:");
+        }
+    }
+
+    //Creo una clase constructora ES2016, VSC me lo corrigio solo.
+    class Airline {
+        constructor(name, code) {
+            this.name = name;
+            this.code = code;
+        }
+    }
+
+    //Creo objetos a partir de la class.
+    const american = new Airline("American Airlines", "AA");
+    const aerolineas = new Airline("Aerolineas Argentinas", "AR");
+    const delta = new Airline("Delta Airlines", "DL");
+    const virgin = new Airline("Virgin Atlantic", "VS");
+    const flybondi = new Airline("FlyBondi", "FO");
+
+    //Selecciono aerolinea, si no es ninguna, flybondi sera la opcion por defecto.
+    const selectAirline = () => {
+        let airline = prompt("Seleccione una aerolínea:");
+        let selectedAirline;
+        if(!(airline == american.name || airline == aerolineas.name || airline == delta.name || airline == virgin.name)) {
+            selectedAirline = flybondi.name;
+            alert("Su aerolinea designada es: " + selectedAirline);
+        }else{
+            selectedAirline = airline;
+            alert("Su aerolinea designada es: " + selectedAirline);
+        }
+        return selectedAirline;
+    }
+
+    //Asigno el valor retornado a la constante.
+    const airline = selectAirline();
+
+    //Busco el codigo dentro de la propiedad code.
+    let aeroCode;
+    switch (airline){
+        case "American Airlines":
+            aeroCode = american.code;
+            break;
+        case "Aerolineas Argentinas":
+            aeroCode = aerolineas.code;
+            break;
+        case "Delta Airlines":
+            aeroCode = delta.code;
+            break;
+        case "Virgin Atlantic":
+            aeroCode = virgin.code;
+            break;
+        default:
+            aeroCode = flybondi.code;
+            break;
+    }       
+
+    //Asigno numero de vuelo
+    let flightNumber = (Math.floor(Math.random() * 100) + 100);
+    let myFlightCode = "2" + flightNumber;
+
+    //Converti la fecha a string con reduce para usar una HOF.
+    const fullDate = newDate.reduce((myAcc, myCurVal) => myAcc + '-' + myCurVal);
+
+    //Genero un array para testear en consola que funcione.
+    const userData = [source, destination, fullDate, passengerName, identifier, aeroCode + myFlightCode];
+    console.log(userData);
+    
+
+    //Imprimo en el lugar de seleccion de vuelos.
+    const main = document.getElementsByClassName("SearchControls_grid")[0];
+    const myFlightCoupon = "Sus datos son: " + "<br>" + "Origen: " + source + "<br>" + "Destino: " + destination + "<br>" + "Pasajero/s: " + passengerName + "<br>" + "Documento/s: " + identifier + "<br>" + "Número de vuelo: " + aeroCode + myFlightCode + "<br>" + "Que tenga un excelente viaje :)";
+    main.innerHTML = myFlightCoupon;
+}else{
+    alert("Welcome " + myName + " " + mySurName);
+    let selectSource = prompt("Select a source, the avaliable options are \n\n" + flightFrom.join("\n"));
+    
+    if (flightFrom.includes(selectSource)) {
+        source = selectSource;
+    }else{
+        while(!(flightFrom.includes(selectSource))) {
+            selectSource = prompt("Select a source, the avaliable options are \n\n" + flightFrom.join("\n"));
+        }
+        source = selectSource;
+    }
+
+    let selectDestination = prompt("Select a destination, the avaliable options are \n\n" + flightTo.join("\n"));
+    
+    if (flightTo.includes(selectDestination)) {
+        destination = selectDestination;
+    }else{
+        while(!(flightTo.includes(selectDestination))) {
+            selectDestination = prompt("Select a destination, the avaliable options are \n\n" + flightTo.join("\n"));
+        }
+        destination = selectDestination;
+    }
+
+    let currentDate = new Date(); 
+    let year = currentDate.getFullYear();
+    let month = currentDate.getMonth() + 1;
+    let day = currentDate.getDate();
+
+    let myDate = prompt("Select Flight Date:", day + "-" + month + "-" + year);
 
     let newDate = myDate.split("-");
 
@@ -69,95 +205,86 @@ if (lang == "Spanish") {
     let newMonth = newDate[1];
     let newYear = newDate[2];
 
-    while(newDay < 0 || newDay > 31 || newMonth < 0 || newMonth > 12 || newYear < 2023 || dateChecker == 0) {
-        dateChecker = 1;
-        myDate = prompt("Seleccione fecha de vuelo:", day + "-" + month + "-" + year);
+    while(newDay < 0 || newDay > 31 || newMonth < 0 || newMonth > 12 || newYear < 2023) {
+        myDate = prompt("Select Flight Date:", day + "-" + month + "-" + year);
         newDate = myDate.split("-");
         newDay = newDate[0];
         newMonth = newDate[1];
         newYear = newDate[2];
     }
+
+    let passengersAmount;
+
+    do{
+        passengersAmount = +prompt("Select ammount of passengers");
+    }while(isNaN(passengersAmount));
+    let passengerName = [];
+    let identifier = [];
+
+    for(let i=1; i<= passengersAmount; i++){
+        passengerName[i - 1] = prompt("Passenger name:");
+        identifier[i - 1] = +prompt("Passenger identifier:");
+        while(isNaN(identifier[i - 1])){
+            identifier[i - 1] = +prompt("Passenger identifier:");
+        }
+    }
+
+    class Airline {
+        constructor(name, code) {
+            this.name = name;
+            this.code = code;
+        }
+    }
+
+    const american = new Airline("American Airlines", "AA");
+    const aerolineas = new Airline("Aerolineas Argentinas", "AR");
+    const delta = new Airline("Delta Airlines", "DL");
+    const virgin = new Airline("Virgin Atlantic", "VS");
+    const flybondi = new Airline("FlyBondi", "FO");
+
+    const selectAirline = () => {
+        let airline = prompt("Select an airline:");
+        let selectedAirline;
+        if(!(airline == american.name || airline == aerolineas.name || airline == delta.name || airline == virgin.name)) {
+            selectedAirline = flybondi.name;
+            alert("Your selected airline is: " + selectedAirline);
+        }else{
+            selectedAirline = airline;
+            alert("Your selected airline is: " + selectedAirline);
+        }
+        return selectedAirline;
+    }
+
+    const airline = selectAirline();
+
+    let aeroCode;
+    switch (airline){
+        case "American Airlines":
+            aeroCode = american.code;
+            break;
+        case "Aerolineas Argentinas":
+            aeroCode = aerolineas.code;
+            break;
+        case "Delta Airlines":
+            aeroCode = delta.code;
+            break;
+        case "Virgin Atlantic":
+            aeroCode = virgin.code;
+            break;
+        default:
+            aeroCode = flybondi.code;
+            break;
+    }       
+
+    let flightNumber = (Math.floor(Math.random() * 100) + 100);
+    let myFlightCode = "2" + flightNumber;
+
+    const fullDate = newDate.reduce((myAcc, myCurVal) => myAcc + '-' + myCurVal);
+
+    const userData = [source, destination, fullDate, passengerName, identifier, aeroCode + myFlightCode];
+    console.log(userData);
+    
+    const main = document.getElementsByClassName("SearchControls_grid")[0];
+    const myFlightCoupon = "Your information is: " + "<br>" + "Source: " + source + "<br>" + "Destination: " + destination + "<br>" + "Passenger/s: " + passengerName + "<br>" + "Passport/s: " + identifier + "<br>" + "Flight number: " + aeroCode + myFlightCode + "<br>" + "Have a good flight :)";
+    main.innerHTML = myFlightCoupon;
 }
-
-
-
-
-
-
-
-
-
-//     // alert("Seleccione una aerolínea, las opciones disponibles son American Airlines, Aerolíneas Argentinas, Delta Airlines y Virgin Atlantic");
-//     // //Convierte en minúsculas dependiendo por si la persona lo ingresó en mayuscula.
-//     // aero = prompt("Linea aerea:").toLowerCase();
-// }else{
-//     alert("Welcome " + myName + " " + mySurName);
-//     prompt("Select a source, the available options are" + flightFrom.join("\n"));
-//     // alert("Select an Airline, the available options are American Airlines, Aerolíneas Argentinas, Delta Airlines and Virgin Atlantic");
-//     // //Convierte en minúsculas dependiendo por si la persona lo ingresó en mayuscula.
-//     // aero = prompt("Airline:").toLowerCase();
-// }
-
-
-
-
-
-
-// //Función que hacer que la primera letra de cada palabra sea Mayúscula para después buscar en el switch y no tener que poner múltiples cases.
-// function myFirstCapital(aero){
-//     //Convierte la primera letra en Mayúscula.
-//     let upperAero = aero.charAt(0).toUpperCase();
-
-//     //Inicializo vacía accAero ya que de no ser así me da Undefined.
-//     let lowerCaseAero, accAero = '';
-
-//     //Iteración letra por letra.
-//     for(let i=1; i <= aero.length; i++){
-
-//         //Si hay un espacio que la próxima letra sea en mayúscula.
-//         if(aero.charAt(i) == ' ') {
-//             lowerCaseAero = ' ' + aero.charAt(i + 1).toUpperCase();
-//             i++;
-//         }else{
-//             lowerCaseAero = aero.charAt(i);
-//         }
-//         accAero = accAero + lowerCaseAero;
-//     }
-
-//     //Aerolinea completa retornada de la función.
-//     let myAirline = upperAero + accAero;
-
-//     return myAirline;
-// }
-
-// //Llamo a la función con una variable en Scope Global.
-// let myAirline = myFirstCapital(aero);
-
-// //Busco la aerolinea.
-// switch (myAirline){
-//     case "American Airlines":
-//         abbr = "AA";
-//         break;
-//     case "Aerolineas Argentinas":
-//         abbr = "AR";
-//         break;
-//     case "Delta Airlines":
-//         abbr = "DL";
-//         break;
-//     case "Virgin Atlantic":
-//         abbr = "VS";
-//         break;
-//     default:
-//         abbr = "FlyBondi :(";
-//         break;
-// }
-
-
-// //Número de vuelo aleatorio y redondeo hacia abajo. Podría haber usado ceil().
-// let flightNumber = (Math.floor(Math.random() * 100) + 100);
-
-// //Agrego el 2 adelante para que tenga 4 dígitos empezando por ese número.
-// alert("Su vuelo es: " + abbr + 2 + flightNumber);
-
-// //Imprimo ticket en pantalla.
-// document.write('<h3>' + "Ticket de vuelo / Flight coupon" + '</h3>' + '<br>' + abbr + 2 + flightNumber);
