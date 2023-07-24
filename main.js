@@ -60,7 +60,7 @@ if (lang == "Spanish") {
     if (flightTo.includes(selectDestination) || newFlightTo.includes(selectDestination)) {
         destination = selectDestination;
     }else{
-        while(!(flightTo.includes(selectDestination)) || newFlightTo.includes(selectDestination)) {
+        while(!(flightTo.includes(selectDestination) || newFlightTo.includes(selectDestination))) {
             selectDestination = prompt("Seleccione un destino, las opciones disponibles son \n\n" + flightTo.join("\n"));
         }
         destination = selectDestination;
@@ -183,7 +183,7 @@ if (lang == "Spanish") {
     if (flightFrom.includes(selectSource) || newFlightFrom.includes(selectSource)) {
         source = selectSource;
     }else{
-        while(!(flightFrom.includes(selectSource)) || newFlightFrom.includes(selectSource)) {
+        while(!(flightFrom.includes(selectSource) || newFlightFrom.includes(selectSource))) {
             selectSource = prompt("Select a source, the avaliable options are \n\n" + flightFrom.join("\n"));
         }
         source = selectSource;
@@ -194,7 +194,7 @@ if (lang == "Spanish") {
     if (flightTo.includes(selectDestination) || newFlightTo.includes(selectDestination)) {
         destination = selectDestination;
     }else{
-        while(!(flightTo.includes(selectDestination)) || newFlightTo.includes(selectDestination)) {
+        while(!(flightTo.includes(selectDestination) || newFlightTo.includes(selectDestination))) {
             selectDestination = prompt("Select a destination, the avaliable options are \n\n" + flightTo.join("\n"));
         }
         destination = selectDestination;
