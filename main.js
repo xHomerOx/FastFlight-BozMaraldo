@@ -123,7 +123,7 @@ if (lang == "Spanish") {
     const selectAirline = () => {
         let airline = prompt("Seleccione una aerolínea, las opciones disponibles son: \n\n" + american.name + "\n" + aerolineas.name + "\n" + delta.name + "\n" + virgin.name + "\n" + flybondi.name);
         let selectedAirline;
-        if(!(airline == american.name || airline == aerolineas.name || airline == delta.name || airline == virgin.name)) {
+        if(!(airline == american.name || airline == aerolineas.name || airline == delta.name || airline == virgin.name || american.name.toLowerCase() || airline == aerolineas.name.toLowerCase() || airline == delta.name.toLowerCase() || airline == virgin.toLowerCase())) {
             selectedAirline = flybondi.name;
             alert("Su aerolinea designada es: " + selectedAirline);
         }else{
@@ -139,16 +139,16 @@ if (lang == "Spanish") {
     //Busco el codigo dentro de la propiedad code.
     let aeroCode;
     switch (airline){
-        case "American Airlines":
+        case american.name, american.name.toLowerCase():
             aeroCode = american.code;
             break;
-        case "Aerolineas Argentinas":
+        case aerolineas.name, aerolineas.name.toLowerCase():
             aeroCode = aerolineas.code;
             break;
-        case "Delta Airlines":
+        case delta.name, delta.name.toLowerCase():
             aeroCode = delta.code;
             break;
-        case "Virgin Atlantic":
+        case virgin.name, virgin.name.toLowerCase():
             aeroCode = virgin.code;
             break;
         default:
@@ -249,7 +249,7 @@ if (lang == "Spanish") {
     const selectAirline = () => {
         let airline = prompt("Select an airline, the available options are: \n\n" + american.name + "\n" + aerolineas.name + "\n" + delta.name + "\n" + virgin.name + "\n" + flybondi.name);
         let selectedAirline;
-        if(!(airline == american.name || airline == aerolineas.name || airline == delta.name || airline == virgin.name)) {
+        if(!(airline == american.name || airline == aerolineas.name || airline == delta.name || airline == virgin.name || american.name.toLowerCase() || airline == aerolineas.name.toLowerCase() || airline == delta.name.toLowerCase() || airline == virgin.toLowerCase())) {
             selectedAirline = flybondi.name;
             alert("Your selected airline is: " + selectedAirline);
         }else{
@@ -263,16 +263,16 @@ if (lang == "Spanish") {
 
     let aeroCode;
     switch (airline){
-        case "American Airlines":
+        case american.name, american.name.toLowerCase():
             aeroCode = american.code;
             break;
-        case "Aerolineas Argentinas":
+        case aerolineas.name, aerolineas.name.toLowerCase():
             aeroCode = aerolineas.code;
             break;
-        case "Delta Airlines":
+        case delta.name, delta.name.toLowerCase():
             aeroCode = delta.code;
             break;
-        case "Virgin Atlantic":
+        case virgin.name, virgin.name.toLowerCase():
             aeroCode = virgin.code;
             break;
         default:
