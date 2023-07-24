@@ -57,7 +57,7 @@ if (lang == "Spanish") {
         destination = selectDestination;
     }else{
         while(!(flightTo.includes(selectDestination)) || !(newFlightTo.includes(selectDestination))) {
-            selectDestination = prompt("Seleccione un origen, las opciones disponibles son \n\n" + flightTo.join("\n"));
+            selectDestination = prompt("Seleccione un destino, las opciones disponibles son \n\n" + flightTo.join("\n"));
         }
         destination = selectDestination;
     }
