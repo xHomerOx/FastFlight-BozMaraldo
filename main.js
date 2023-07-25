@@ -127,7 +127,7 @@ if (lang == "Spanish") {
     const selectAirline = () => {
         let airline = prompt("Seleccione una aerolínea, las opciones disponibles son: \n\n" + american.name + "\n" + aerolineas.name + "\n" + delta.name + "\n" + virgin.name + "\n" + flybondi.name);
         let selectedAirline;
-        if(!(airline == american.name || airline == aerolineas.name || airline == delta.name || airline == virgin.name || american.name.toLowerCase() || airline == aerolineas.name.toLowerCase() || airline == delta.name.toLowerCase() || airline == virgin.toLowerCase())) {
+        if((airline != american.name && airline != aerolineas.name && airline != delta.name && airline != virgin.name && airline != american.name.toLowerCase() && airline != aerolineas.name.toLowerCase() && airline != delta.name.toLowerCase() && airline != virgin.name.toLowerCase())) {
             selectedAirline = flybondi.name;
             alert("Su aerolinea designada es: " + selectedAirline);
         }else{
@@ -169,8 +169,15 @@ if (lang == "Spanish") {
 
     //Genero un array para testear en consola que funcione.
     const userData = [source, destination, fullDate, passengerName, identifier, aeroCode + myFlightCode];
-    console.log(userData);
     
+    function myUserData(user) {
+        for(let user of userData){
+            console.log(user);
+        }
+        return user;
+    }
+    
+    myUserData();
 
     //Imprimo en el lugar de seleccion de vuelos.
     const main = document.getElementsByClassName("SearchControls_grid")[0];
@@ -253,12 +260,13 @@ if (lang == "Spanish") {
     const selectAirline = () => {
         let airline = prompt("Select an airline, the available options are: \n\n" + american.name + "\n" + aerolineas.name + "\n" + delta.name + "\n" + virgin.name + "\n" + flybondi.name);
         let selectedAirline;
-        if(!(airline == american.name || airline == aerolineas.name || airline == delta.name || airline == virgin.name || american.name.toLowerCase() || airline == aerolineas.name.toLowerCase() || airline == delta.name.toLowerCase() || airline == virgin.toLowerCase())) {
+        if((airline != american.name && airline != aerolineas.name && airline != delta.name && airline != virgin.name && airline != american.name.toLowerCase() && airline != aerolineas.name.toLowerCase() && airline != delta.name.toLowerCase() && airline != virgin.name.toLowerCase())) {
             selectedAirline = flybondi.name;
+            console.log(selectedAirline);
             alert("Your selected airline is: " + selectedAirline);
         }else{
             selectedAirline = airline;
-            alert("Your selected airline is: " + selectedAirline);
+            alert("Your selected airline is: " + "selectedAirline");
         }
         return selectedAirline;
     }
@@ -290,8 +298,17 @@ if (lang == "Spanish") {
     const fullDate = newDate.reduce((myAcc, myCurVal) => myAcc + '-' + myCurVal);
 
     const userData = [source, destination, fullDate, passengerName, identifier, aeroCode + myFlightCode];
-    console.log(userData);
+
+    function myUserData() {
+        for(let user of userData){
+            user+= 1;
+            console.log(user);
+        }
+        return user;
+    }
     
+    myUserData();
+
     const main = document.getElementsByClassName("SearchControls_grid")[0];
     const myFlightCoupon = "Your information is: " + "<br>" + "Source: " + userData[0] + "<br>" + "Destination: " + userData[1] + "<br>" + "Date: " + userData[2] + "<br>" + "Passenger/s: " + userData[3] + "<br>" + "Passport/s: " + userData[4] + "<br>" + "Flight number: " + userData[5] + "<br>" + "Have a good flight :)";
     main.innerHTML = myFlightCoupon;
