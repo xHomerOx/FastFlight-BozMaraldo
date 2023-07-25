@@ -176,7 +176,7 @@ if (lang == "Spanish") {
     
     function myUserData(user) {
         for(let user of userData){
-            console.log(user);
+            alert("Revise que los datos sean correctos: " + user);
         }
         return user;
     }
@@ -309,8 +309,7 @@ if (lang == "Spanish") {
 
     function myUserData(user) {
         for(let user of userData){
-            user+= 1;
-            console.log(user);
+            alert("Check if the data is valid: " + user);
         }
         return user;
     }
