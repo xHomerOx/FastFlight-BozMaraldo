@@ -143,22 +143,26 @@ if (lang == "Spanish") {
     //Busco el codigo dentro de la propiedad code.
     let aeroCode;
     switch (airline){
-        case american.name, american.name.toLowerCase():
+        case american.name:
+        case american.name.toLowerCase():
             aeroCode = american.code;
             break;
-        case aerolineas.name, aerolineas.name.toLowerCase():
+        case aerolineas.name:
+        case aerolineas.name.toLowerCase():
             aeroCode = aerolineas.code;
             break;
-        case delta.name, delta.name.toLowerCase():
+        case delta.name:
+        case delta.name.toLowerCase():
             aeroCode = delta.code;
             break;
-        case virgin.name, virgin.name.toLowerCase():
+        case virgin.name:
+        case virgin.name.toLowerCase():
             aeroCode = virgin.code;
             break;
         default:
             aeroCode = flybondi.code;
             break;
-    }       
+    }      
 
     //Asigno numero de vuelo
     let flightNumber = (Math.floor(Math.random() * 100) + 100);
@@ -275,16 +279,20 @@ if (lang == "Spanish") {
 
     let aeroCode;
     switch (airline){
-        case american.name, american.name.toLowerCase():
+        case american.name:
+        case american.name.toLowerCase():
             aeroCode = american.code;
             break;
-        case aerolineas.name, aerolineas.name.toLowerCase():
+        case aerolineas.name:
+        case aerolineas.name.toLowerCase():
             aeroCode = aerolineas.code;
             break;
-        case delta.name, delta.name.toLowerCase():
+        case delta.name:
+        case delta.name.toLowerCase():
             aeroCode = delta.code;
             break;
-        case virgin.name, virgin.name.toLowerCase():
+        case virgin.name:
+        case virgin.name.toLowerCase():
             aeroCode = virgin.code;
             break;
         default:
