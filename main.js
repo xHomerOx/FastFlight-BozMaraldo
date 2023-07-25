@@ -270,7 +270,7 @@ if (lang == "Spanish") {
             alert("Your selected airline is: " + selectedAirline);
         }else{
             selectedAirline = airline;
-            alert("Your selected airline is: " + "selectedAirline");
+            alert("Your selected airline is: " + selectedAirline);
         }
         return selectedAirline;
     }
@@ -307,7 +307,7 @@ if (lang == "Spanish") {
 
     const userData = [source, destination, fullDate, passengerName, identifier, aeroCode + myFlightCode];
 
-    function myUserData() {
+    function myUserData(user) {
         for(let user of userData){
             user+= 1;
             console.log(user);
