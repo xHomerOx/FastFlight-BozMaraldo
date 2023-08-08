@@ -142,10 +142,10 @@ if (lang == "Spanish") {
 
         let selectedAirline = prompt("Seleccione una aerolínea, las opciones disponibles son: \n\n" + airName);
 
-        let myAirline = myAirlines.forEach(airline => console.log(airline.name));
+        let airline = myAirlines.forEach(airline => {return airline});
 
-        if(selectedAirline == myAirline || selectedAirline == myAirline.toLowerCase()) {
-            selectedAirline = myAirline;
+        if(selectedAirline == airline.name || selectedAirline == airline.name.toLowerCase()) {
+            selectedAirline = airline.name;
             alert("Su aerolinea designada es: " + selectedAirline);
         }else{
             selectedAirline = flybondi.name;
