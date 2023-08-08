@@ -142,15 +142,16 @@ if (lang == "Spanish") {
 
         let selectedAirline = prompt("Seleccione una aerolínea, las opciones disponibles son: \n\n" + airName);
 
-        let airline = myAirlines.forEach(airline => {return airline});
-
-        if(selectedAirline == airline.name || selectedAirline == airline.name.toLowerCase()) {
-            selectedAirline = airline.name;
-            alert("Su aerolinea designada es: " + selectedAirline);
-        }else{
-            selectedAirline = flybondi.name;
-            alert("Su aerolinea designada es: " + selectedAirline);
+        for (const airline of myAirlines) {
+            if (selectedAirline.includes(airline.name)) {
+                selectedAirline = airline.name;
+            }else{
+                selectedAirline = flybondi.name;
+            }
+            console.log(selectedAirline.includes(airline.name));
         }
+
+        alert("Su aerolinea designada es: " + selectedAirline);
 
         return selectedAirline;
     }
