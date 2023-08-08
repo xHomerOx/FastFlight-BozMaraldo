@@ -108,61 +108,54 @@ if (lang == "Spanish") {
         }
     }
 
-    //Creo una clase constructora ES2016, VSC me lo corrigio solo.
-    class Airline {
-        constructor(name, code) {
-            this.name = name;
-            this.code = code;
+    const myAirlines = [
+        american = {
+            name: "American Airlines",
+            code: "AA"
+        },
+        aerolineas = {
+            name: "Aerolineas Argentinas", 
+            code: "AR"
+        },
+        delta = {
+            name: "Delta Airlines",
+            code: "DL"
+        },
+        virgin = {
+            name: "Virgin Atlantic", 
+            code: "VS"
+        },
+        flybondi = {
+            name: "FlyBondi", 
+            code: "FO"
         }
-    }
-
-    //Creo objetos a partir de la class.
-    const american = new Airline("American Airlines", "AA");
-    const aerolineas = new Airline("Aerolineas Argentinas", "AR");
-    const delta = new Airline("Delta Airlines", "DL");
-    const virgin = new Airline("Virgin Atlantic", "VS");
-    const flybondi = new Airline("FlyBondi", "FO");
+    ]
 
     //Selecciono aerolinea, si no es ninguna, flybondi sera la opcion por defecto.
     const selectAirline = () => {
-        let airline = prompt("Seleccione una aerolínea, las opciones disponibles son: \n\n" + american.name + "\n" + aerolineas.name + "\n" + delta.name + "\n" + virgin.name + "\n" + flybondi.name);
-        let selectedAirline;
-        if((airline != american.name && airline != aerolineas.name && airline != delta.name && airline != virgin.name && airline != american.name.toLowerCase() && airline != aerolineas.name.toLowerCase() && airline != delta.name.toLowerCase() && airline != virgin.name.toLowerCase())) {
-            selectedAirline = flybondi.name;
+
+        let airName = '';
+        let airCode = '';
+        myAirlines.forEach(airline => { 
+            airName += airline.name + "\n", airCode += airline.code;
+        });
+
+        let selectedAirline = prompt("Seleccione una aerolínea, las opciones disponibles son: \n\n" + airName);
+
+        let myAirline = myAirlines.forEach(airline => console.log(airline.name));
+
+        if(selectedAirline == myAirline || selectedAirline == myAirline.toLowerCase()) {
+            selectedAirline = myAirline;
             alert("Su aerolinea designada es: " + selectedAirline);
         }else{
-            selectedAirline = airline;
+            selectedAirline = flybondi.name;
             alert("Su aerolinea designada es: " + selectedAirline);
         }
+
         return selectedAirline;
     }
 
-    //Asigno el valor retornado a la constante.
-    const airline = selectAirline();
-
-    //Busco el codigo dentro de la propiedad code.
-    let aeroCode;
-    switch (airline){
-        case american.name:
-        case american.name.toLowerCase():
-            aeroCode = american.code;
-            break;
-        case aerolineas.name:
-        case aerolineas.name.toLowerCase():
-            aeroCode = aerolineas.code;
-            break;
-        case delta.name:
-        case delta.name.toLowerCase():
-            aeroCode = delta.code;
-            break;
-        case virgin.name:
-        case virgin.name.toLowerCase():
-            aeroCode = virgin.code;
-            break;
-        default:
-            aeroCode = flybondi.code;
-            break;
-    }      
+    let aeroCode = selectAirline();
 
     //Asigno numero de vuelo
     let flightNumber = (Math.floor(Math.random() * 100) + 100);
