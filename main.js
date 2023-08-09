@@ -70,11 +70,12 @@ for(let i = 0; i < flightFrom.length; i++){
 }
 
 selectSource.addEventListener('change', function(){
-    flightFrom.forEach(function() {
-        let duplicatedCity = flightTo.find('option[value="'+ optionSource.value +'"]');
-        console.log(duplicatedCity);
-    });
-})
+    optionSource.setAttribute('selected', 'selected');
+});
+
+selectDestination.addEventListener('change', function(){
+    optionDestination.setAttribute('selected', 'selected');
+});
 
 //Para comparar lowercase use HOF.
 const newFlightFrom = flightFrom.map(flight => flight.toLowerCase());
