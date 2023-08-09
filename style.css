@@ -39,6 +39,11 @@ header img{
     background-color: #fff;
 }
 
+.AutoSuggest_inputWrapper > * {
+    font: inherit;
+    padding: 0.2em 0.5em;
+}
+
 #destinationInput-label{
     border-radius: 0;
     background-color: #fff;
