@@ -37,22 +37,74 @@ const newFlightTo = flightTo.map(flight => flight.toLowerCase());
 
 //Selecciona Idioma dependiendo de la variable.
 if (lang == "Spanish") {
+    const myAirlines = [
+        american = {
+            name: "American Airlines",
+            code: "AA"
+        },
+        aerolineas = {
+            name: "Aerolineas Argentinas", 
+            code: "AR"
+        },
+        delta = {
+            name: "Delta Airlines",
+            code: "DL"
+        },
+        virgin = {
+            name: "Virgin Atlantic", 
+            code: "VS"
+        },
+        flybondi = {
+            name: "FlyBondi", 
+            code: "FO"
+        }
+    ]
+
+    //Selecciono aerolinea, si no es ninguna, flybondi sera la opcion por defecto.
+    const selectAirline = () => {
+        let airName = '';
+        let airCode = '';
+        myAirlines.forEach(airline => { 
+            airName += airline.name + "\n", airCode += airline.code;
+        });
+
+        let selectedAirline = prompt("Seleccione una aerolínea, las opciones disponibles son: \n\n" + airName);
+    
+        let myAirline = myAirlines.find(airline => airline.name === selectedAirline);
+
+        if (myAirline){
+            alert("Su aerolinea designada es: " + myAirline.name);
+        }else{
+            myAirline = flybondi;
+            alert("Su aerolinea designada es: " + myAirline.name);
+        }
+
+        return myAirline.code;
+    }
+
+    class UserData {
+        constructor(source, destination, fullDate, passengerName, identifier, myFlightCode) {
+          this.source = source;
+          this.destination = destination;
+          this.fullDate = fullDate;
+          this.passengerName = passengerName;
+          this.identifier = identifier;
+          this.myFlightCode = myFlightCode;
+        }
+    }
+
     alert("Bienvenido " + myName + " " + mySurName);
     let selectSource = prompt("Seleccione un origen, las opciones disponibles son \n\n" + flightFrom.join("\n"));
     
     //Se fija si existe lo seleccionado con Includes, si da true sigue, si da false vuelve.
     if (flightFrom.includes(selectSource) || newFlightFrom.includes(selectSource)) {
         source = selectSource;
-        console.log(selectSource);
     } else {
         while (!(flightFrom.includes(selectSource) || newFlightFrom.includes(selectSource))) {
             selectSource = prompt("Seleccione un origen, las opciones disponibles son \n\n" + flightFrom.join("\n"));
-            console.log(selectSource);
         }
         source = selectSource;
     }
-
-    console.log(selectSource);
 
     let selectDestination = prompt("Seleccione un destino, las opciones disponibles son \n\n" + flightTo.join("\n"));
 
@@ -108,6 +160,24 @@ if (lang == "Spanish") {
         }
     }
 
+    let aeroCode = selectAirline();
+
+    let myFlightCode;
+    //Asigno numero de vuelo
+    let flightNumber = (Math.floor(Math.random() * 100) + 100);
+    myFlightCode = "2" + flightNumber;
+
+    //Converti la fecha a string con reduce para usar una HOF.
+    let fullDate;
+    fullDate = newDate.reduce((myAcc, myCurVal) => myAcc + '-' + myCurVal);
+
+    let userData = new UserData(source, destination, fullDate, passengerName, identifier, myFlightCode);
+
+    //Imprimo en el lugar de seleccion de vuelos.
+    const main = document.getElementsByClassName("SearchControls_grid")[0];
+    const myFlightCoupon = "Sus datos son: " + "<br>" + "Origen: " + userData.source + "<br>" + "Destino: " + userData.destination  + "<br>" + "Fecha: " + userData.fullDate +  "<br>" + "Pasajero/s: " + userData.passengerName + "<br>" + "Documento/s: " + userData.identifier + "<br>" + "Número de vuelo: " + aeroCode + userData.myFlightCode + "<br>" + "Que tenga un excelente viaje :)";
+    main.innerHTML = myFlightCoupon;
+}else{
     const myAirlines = [
         american = {
             name: "American Airlines",
@@ -131,57 +201,38 @@ if (lang == "Spanish") {
         }
     ]
 
-    //Selecciono aerolinea, si no es ninguna, flybondi sera la opcion por defecto.
     const selectAirline = () => {
-
         let airName = '';
         let airCode = '';
         myAirlines.forEach(airline => { 
             airName += airline.name + "\n", airCode += airline.code;
         });
 
-        let selectedAirline = prompt("Seleccione una aerolínea, las opciones disponibles son: \n\n" + airName);
+        let selectedAirline = prompt("Select an airline, the available options are: \n\n" + airName);
+    
+        let myAirline = myAirlines.find(airline => airline.name === selectedAirline);
 
-        for (const airline of myAirlines) {
-            if (selectedAirline.includes(airline.name)) {
-                selectedAirline = airline.name;
-            }else{
-                selectedAirline = flybondi.name;
-            }
-            console.log(selectedAirline.includes(airline.name));
+        if (myAirline){
+            alert("Your selected airline is: " + myAirline.name);
+        }else{
+            myAirline = flybondi;
+            alert("Your selected airline is: " + myAirline.name);
         }
 
-        alert("Su aerolinea designada es: " + selectedAirline);
-
-        return selectedAirline;
+        return myAirline.code;
     }
 
-    let aeroCode = selectAirline();
-
-    //Asigno numero de vuelo
-    let flightNumber = (Math.floor(Math.random() * 100) + 100);
-    let myFlightCode = "2" + flightNumber;
-
-    //Converti la fecha a string con reduce para usar una HOF.
-    const fullDate = newDate.reduce((myAcc, myCurVal) => myAcc + '-' + myCurVal);
-
-    //Genero un array para testear en consola que funcione.
-    const userData = [source, destination, fullDate, passengerName, identifier, aeroCode + myFlightCode];
-    
-    function myUserData(user) {
-        for(let user of userData){
-            alert("Revise que los datos sean correctos: " + user);
+    class UserData {
+        constructor(source, destination, fullDate, passengerName, identifier, myFlightCode) {
+          this.source = source;
+          this.destination = destination;
+          this.fullDate = fullDate;
+          this.passengerName = passengerName;
+          this.identifier = identifier;
+          this.myFlightCode = myFlightCode;
         }
-        return user;
     }
-    
-    myUserData();
 
-    //Imprimo en el lugar de seleccion de vuelos.
-    const main = document.getElementsByClassName("SearchControls_grid")[0];
-    const myFlightCoupon = "Sus datos son: " + "<br>" + "Origen: " + userData[0] + "<br>" + "Destino: " + userData[1]  + "<br>" + "Fecha: " + userData[2] +  "<br>" + "Pasajero/s: " + userData[3] + "<br>" + "Documento/s: " + userData[4] + "<br>" + "Número de vuelo: " + userData[5] + "<br>" + "Que tenga un excelente viaje :)";
-    main.innerHTML = myFlightCoupon;
-}else{
     alert("Welcome " + myName + " " + mySurName);
     let selectSource = prompt("Select a source, the avaliable options are \n\n" + flightFrom.join("\n"));
     
@@ -242,75 +293,18 @@ if (lang == "Spanish") {
         }
     }
 
-    class Airline {
-        constructor(name, code) {
-            this.name = name;
-            this.code = code;
-        }
-    }
+    let aeroCode = selectAirline();
 
-    const american = new Airline("American Airlines", "AA");
-    const aerolineas = new Airline("Aerolineas Argentinas", "AR");
-    const delta = new Airline("Delta Airlines", "DL");
-    const virgin = new Airline("Virgin Atlantic", "VS");
-    const flybondi = new Airline("FlyBondi", "FO");
-
-    const selectAirline = () => {
-        let airline = prompt("Select an airline, the available options are: \n\n" + american.name + "\n" + aerolineas.name + "\n" + delta.name + "\n" + virgin.name + "\n" + flybondi.name);
-        let selectedAirline;
-        if((airline != american.name && airline != aerolineas.name && airline != delta.name && airline != virgin.name && airline != american.name.toLowerCase() && airline != aerolineas.name.toLowerCase() && airline != delta.name.toLowerCase() && airline != virgin.name.toLowerCase())) {
-            selectedAirline = flybondi.name;
-            console.log(selectedAirline);
-            alert("Your selected airline is: " + selectedAirline);
-        }else{
-            selectedAirline = airline;
-            alert("Your selected airline is: " + selectedAirline);
-        }
-        return selectedAirline;
-    }
-
-    const airline = selectAirline();
-
-    let aeroCode;
-    switch (airline){
-        case american.name:
-        case american.name.toLowerCase():
-            aeroCode = american.code;
-            break;
-        case aerolineas.name:
-        case aerolineas.name.toLowerCase():
-            aeroCode = aerolineas.code;
-            break;
-        case delta.name:
-        case delta.name.toLowerCase():
-            aeroCode = delta.code;
-            break;
-        case virgin.name:
-        case virgin.name.toLowerCase():
-            aeroCode = virgin.code;
-            break;
-        default:
-            aeroCode = flybondi.code;
-            break;
-    }       
-
+    let myFlightCode;
     let flightNumber = (Math.floor(Math.random() * 100) + 100);
-    let myFlightCode = "2" + flightNumber;
+    myFlightCode = "2" + flightNumber;
 
-    const fullDate = newDate.reduce((myAcc, myCurVal) => myAcc + '-' + myCurVal);
+    let fullDate;
+    fullDate = newDate.reduce((myAcc, myCurVal) => myAcc + '-' + myCurVal);
 
-    const userData = [source, destination, fullDate, passengerName, identifier, aeroCode + myFlightCode];
-
-    function myUserData(user) {
-        for(let user of userData){
-            alert("Check if the data is valid: " + user);
-        }
-        return user;
-    }
-    
-    myUserData();
+    let userData = new UserData(source, destination, fullDate, passengerName, identifier, myFlightCode);
 
     const main = document.getElementsByClassName("SearchControls_grid")[0];
-    const myFlightCoupon = "Your information is: " + "<br>" + "Source: " + userData[0] + "<br>" + "Destination: " + userData[1] + "<br>" + "Date: " + userData[2] + "<br>" + "Passenger/s: " + userData[3] + "<br>" + "Passport/s: " + userData[4] + "<br>" + "Flight number: " + userData[5] + "<br>" + "Have a good flight :)";
+    const myFlightCoupon = "Your information is: " + "<br>" + "Source: " + userData.source + "<br>" + "Destination: " + userData.destination + "<br>" + "Date: " + userData.fullDate + "<br>" + "Passenger/s: " + userData.passengerName + "<br>" + "Passport/s: " + userData.identifier + "<br>" + "Flight number: " + aeroCode + userData.myFlightCode + "<br>" + "Have a good flight :)";
     main.innerHTML = myFlightCoupon;
 }
