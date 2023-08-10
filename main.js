@@ -26,6 +26,18 @@ let lang;
 // }
 
 //Arrays de Origen y Destino.
+
+function airportChecker() {
+    let checked = optionSource.hasAttribute('selected');
+    for(i = 0; i < selectSource.length; i++) {
+        if (checked[i].value === selectDestination.options[i]) {
+            selectDestination.options[i].remove();
+            console.log("works");
+            break;
+        }
+    }
+}
+
 const flightFrom = ["Buenos Aires (EZE)", "La Paz (LPB)", "Brasilia (BSB)", "Santiago (AMB)", "Bogotá (BOG)", "Quito (UIO)", "Georgetown (GEO)", "Asunción (ASU)", "Lima (LIM)", "Zanderij (PBM)", "Montevideo (MVD)", "Caracas (CCS)"];
 const flightTo = ["Buenos Aires (EZE)", "La Paz (LPB)", "Brasilia (BSB)", "Santiago (AMB)", "Bogotá (BOG)", "Quito (UIO)", "Georgetown (GEO)", "Asunción (ASU)", "Lima (LIM)", "Zanderij (PBM)", "Montevideo (MVD)", "Caracas (CCS)"];
 
@@ -46,7 +58,6 @@ for(let i = 0; i < flightFrom.length; i++){
     optionSource.value = source;
     optionSource.text = source;
     selectSource.appendChild(optionSource);
-    console.log(source);
 }
 
 let destContainer = document.querySelectorAll('.AutoSuggest_inputWrapper')[1];
@@ -66,15 +77,35 @@ for(let i = 0; i < flightFrom.length; i++){
     optionDestination.value = destination;
     optionDestination.text = destination;
     selectDestination.appendChild(optionDestination);
-    console.log(destination);
 }
 
-selectSource.addEventListener('change', function(){
-    optionSource.setAttribute('selected', 'selected');
+
+let optionCheck1;
+selectSource.addEventListener('change', function(event){
+    optionCheck1 = event.target.value;
+    for (let i = 0; i < selectDestination.options.length; i++) {
+        if(selectDestination.options[i].value === optionCheck1) {
+            selectSource.options[i].setAttribute('selected', 'selected');
+            selectDestination.options[i].style.display = "none";
+        }else{
+            selectSource.options[i].removeAttribute('selected', 'selected');
+            selectDestination.options[i].style.display = "block";
+        }
+    }
 });
 
-selectDestination.addEventListener('change', function(){
-    optionDestination.setAttribute('selected', 'selected');
+let optionCheck2;
+selectDestination.addEventListener('change', function(event){
+    optionCheck2 = event.target.value;
+    for (let i = 0; i < selectSource.options.length; i++) {
+        if(selectSource.options[i].value === optionCheck2) {
+            selectDestination.options[i].setAttribute('selected', 'selected');
+            selectSource.options[i].style.display = "none";
+        }else{
+            selectDestination.options[i].removeAttribute('selected', 'selected');
+            selectSource.options[i].style.display = "block";
+        }
+    }
 });
 
 //Para comparar lowercase use HOF.
