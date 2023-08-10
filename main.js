@@ -27,17 +27,6 @@ let lang;
 
 //Arrays de Origen y Destino.
 
-function airportChecker() {
-    let checked = optionSource.hasAttribute('selected');
-    for(i = 0; i < selectSource.length; i++) {
-        if (checked[i].value === selectDestination.options[i]) {
-            selectDestination.options[i].remove();
-            console.log("works");
-            break;
-        }
-    }
-}
-
 const flightFrom = ["Buenos Aires (EZE)", "La Paz (LPB)", "Brasilia (BSB)", "Santiago (AMB)", "Bogotá (BOG)", "Quito (UIO)", "Georgetown (GEO)", "Asunción (ASU)", "Lima (LIM)", "Zanderij (PBM)", "Montevideo (MVD)", "Caracas (CCS)"];
 const flightTo = ["Buenos Aires (EZE)", "La Paz (LPB)", "Brasilia (BSB)", "Santiago (AMB)", "Bogotá (BOG)", "Quito (UIO)", "Georgetown (GEO)", "Asunción (ASU)", "Lima (LIM)", "Zanderij (PBM)", "Montevideo (MVD)", "Caracas (CCS)"];
 
@@ -108,9 +97,19 @@ selectDestination.addEventListener('change', function(event){
     }
 });
 
+let dateContainer = document.querySelector('.Date_inputWrapper input');
+
+let currentDate = new Date(); 
+let year = currentDate.getFullYear();
+let month = currentDate.getMonth() + 1;
+let day = currentDate.getDate();
+
+dateContainer.value = `${day}-${month}-${year}`;
+dateContainer.text = `${day}-${month}-${year}`;
+
 //Para comparar lowercase use HOF.
-const newFlightFrom = flightFrom.map(flight => flight.toLowerCase());
-const newFlightTo = flightTo.map(flight => flight.toLowerCase());
+// const newFlightFrom = flightFrom.map(flight => flight.toLowerCase());
+// const newFlightTo = flightTo.map(flight => flight.toLowerCase());
 
 // //Selecciona Idioma dependiendo de la variable.
 // if (lang == "Spanish") {

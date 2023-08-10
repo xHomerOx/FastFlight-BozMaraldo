@@ -39,7 +39,7 @@ header img{
     background-color: #fff;
 }
 
-.AutoSuggest_inputWrapper > * {
+.AutoSuggest_inputWrapper > *, .Date_inputWrapper > *, .Cabin_inputWrapper > * {
     font: inherit;
     padding: 0.2em 0.5em;
 }
