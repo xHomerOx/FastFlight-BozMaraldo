@@ -1,29 +1,48 @@
 /* Functions */
+let main = document.getElementsByClassName('SearchControls_grid')[0];
+
+let resultsDiv = document.createElement('div');
+resultsDiv.classList.add('results-found');
+resultsDiv.style.display = "block";
+resultsDiv.style.textAlign = "center";
+
 let matchCount = 0;
+
+main.insertAdjacentElement('afterend', resultsDiv);
+
+let ul = document.createElement('ul');
+resultsDiv.appendChild(ul);
+
+let li = document.createElement('li');
+ul.appendChild(li);
+
 function compareFlights(sourceFound, destinationFound) {
     let matchFound = [];
+
     let sourceIndex = selectSource.selectedIndex;
     let destinationIndex = selectDestination.selectedIndex;
     if (selectSource.options[sourceIndex].value === sourceFound && selectDestination.options[destinationIndex].value === destinationFound) {
         matchCount++;
-        main.insertAdjacentElement('afterend', resultsDiv);
+
+        matchFound.push({sourceFound, destinationFound});
+
         resultsDiv.innerText = "Vuelos encontrados:";
         let ul = document.createElement('ul');
         resultsDiv.appendChild(ul);
-        matchFound.push({sourceFound, destinationFound});
 
         if(matchFound.length > 0) {
             for(i=0; i<= matchCount; i++) {
                 let li = document.createElement('li');
                 ul.appendChild(li);
-                li.innerHTML = `Origen: ${sourceFound} ${'<br>'} Destino: ${destinationFound}`;
+                li.innerHTML = `Origen: ${sourceFound}${'<br>'}Destino: ${destinationFound}`;
                 console.log(sourceFound, destinationFound);
             }
         }else{
-            let li = document.createElement('li');
-            ul.appendChild(li);
             li.innerHTML = `No se han encontrado vuelos que coincidan con su busqueda.`;
         }
+
+    }else{
+        li.innerHTML = `No se han encontrado vuelos que coincidan con su busqueda.`;
     }
 };
 
@@ -144,12 +163,6 @@ for (let i = 0; i < myFlights.length; i++) {
         compareFlights(sourceFound, destinationFound);
     });
 }
-
-let main = document.getElementsByClassName('SearchControls_grid')[0];
-let resultsDiv = document.createElement('div');
-resultsDiv.classList.add('results-found');
-resultsDiv.style.display = "block";
-resultsDiv.style.textAlign = "center";
 
 //Para comparar lowercase use HOF.
 // const newFlightFrom = flightFrom.map(flight => flight.toLowerCase());
