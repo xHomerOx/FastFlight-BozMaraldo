@@ -1,38 +1,11 @@
-// //Variable que se usa como condicion.
-// let typedData = 0;
-// let myName, mySurName, defaultCountry, myCountry;
-
-// //Datos del cliente.
-// do {
-//     myName = prompt("Ingrese su nombre");
-//     mySurName = prompt("Ingrese su apellido"); 
-//     defaultCountry = "Argentina";
-//     myCountry = prompt("Ingrese su nacionalidad", defaultCountry);
-//     if (myName && mySurName && myCountry){
-//         typedData = 1;
-//     }else{
-//         typedData = 0;
-//     }
-// } while(typedData == 0);
-
-//Variable vacía para selección de idioma.
-let lang;
-
-//Compara la selección.
-// if (myCountry == defaultCountry){
-//     lang = "Spanish";
-// }else{
-//     lang = "English";
-// }
-
-//Arrays de Origen y Destino.
-
 const flightFrom = ["Buenos Aires (EZE)", "La Paz (LPB)", "Brasilia (BSB)", "Santiago (AMB)", "Bogotá (BOG)", "Quito (UIO)", "Georgetown (GEO)", "Asunción (ASU)", "Lima (LIM)", "Zanderij (PBM)", "Montevideo (MVD)", "Caracas (CCS)"];
 const flightTo = ["Buenos Aires (EZE)", "La Paz (LPB)", "Brasilia (BSB)", "Santiago (AMB)", "Bogotá (BOG)", "Quito (UIO)", "Georgetown (GEO)", "Asunción (ASU)", "Lima (LIM)", "Zanderij (PBM)", "Montevideo (MVD)", "Caracas (CCS)"];
 
 let srcContainer = document.querySelector('.AutoSuggest_inputWrapper');
 let srcInput = document.querySelector('.AutoSuggest_inputWrapper input');
 let selectSource = document.createElement('select');
+
+selectSource.style.padding = '0.3em 0.5em';
 
 srcInput.addEventListener("click", function(event) {
     event.preventDefault();
@@ -53,6 +26,8 @@ let destContainer = document.querySelectorAll('.AutoSuggest_inputWrapper')[1];
 let destInput = document.querySelectorAll('.AutoSuggest_inputWrapper input')[1];
 let selectDestination = document.createElement('select');
 
+selectDestination.style.padding = '0.3em 0.5em';
+
 destInput.addEventListener("click", function(event) {
     event.preventDefault();
     destContainer.appendChild(selectDestination);
@@ -60,8 +35,8 @@ destInput.addEventListener("click", function(event) {
 });
 
 let optionDestination;
-for(let i = 0; i < flightFrom.length; i++){
-    let destination = flightFrom[i];
+for(let i = 0; i < flightTo.length; i++){
+    let destination = flightTo[i];
     optionDestination = document.createElement('option');
     optionDestination.value = destination;
     optionDestination.text = destination;
@@ -97,15 +72,32 @@ selectDestination.addEventListener('change', function(event){
     }
 });
 
-let dateContainer = document.querySelector('.Date_inputWrapper input');
+const dateContainer = document.querySelector('.Date_inputWrapper input');
+const datepicker = new Datepicker(dateContainer, {
+    format: 'dd-mm-yyyy',
+    language: 'es'
+}); 
 
-let currentDate = new Date(); 
-let year = currentDate.getFullYear();
-let month = currentDate.getMonth() + 1;
-let day = currentDate.getDate();
+let cabinNumber = document.querySelector('.Cabin_inputWrapper input');
 
-dateContainer.value = `${day}-${month}-${year}`;
-dateContainer.text = `${day}-${month}-${year}`;
+cabinNumber.addEventListener('blur', function numberLimit(event) {
+    event.preventDefault();
+    if (cabinNumber.value < 1) {
+        cabinNumber.value = 1;
+    }
+    if (cabinNumber.value > 20) {
+        cabinNumber.value = 20;
+    }
+    cabinNumber.text = cabinNumber.value;
+});
+
+let myFlights = flightsData;
+
+const selectedFlights = (key, value) => { localStorage.setItem(key, value)};
+
+for (const flight of myFlights) {
+    selectedFlights(JSON.stringify(flight.source), JSON.stringify(flight.destination));
+}
 
 //Para comparar lowercase use HOF.
 // const newFlightFrom = flightFrom.map(flight => flight.toLowerCase());

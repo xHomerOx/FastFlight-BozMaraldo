@@ -69,6 +69,19 @@ header img{
     cursor: pointer;
 }
 
+.BpkButtonBase_bpk-button{
+    display: flex;
+    width: -moz-fit-content;
+    width: fit-content;
+    margin-left: 0.75rem;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0.75rem;
+    height: 4rem;
+    padding: 0 2rem;
+    background: #05203c;
+}
+
 .carousel-item{
     height: 600px;
 }
