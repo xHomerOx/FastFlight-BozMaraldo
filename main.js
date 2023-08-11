@@ -147,6 +147,7 @@ let mySrc;
 let myDest;
 
 let mySubmit = document.querySelector(".BpkButtonBase_bpk-button");
+
 for (let i = 0; i < myFlights.length; i++) {
     let flight = myFlights[i];
     mySrc = flight.source;
@@ -157,6 +158,8 @@ for (let i = 0; i < myFlights.length; i++) {
 
     let sourceFound = JSON.parse(localStorage.getItem("source " + i));
     let destinationFound = JSON.parse(localStorage.getItem("destination " + i));
+    
+    console.log(sourceFound, destinationFound);
 
     mySubmit.addEventListener('click', function(event){
         event.preventDefault();
