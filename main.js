@@ -1,11 +1,35 @@
-const flightFrom = ["Buenos Aires (EZE)", "La Paz (LPB)", "Brasilia (BSB)", "Santiago (AMB)", "Bogotá (BOG)", "Quito (UIO)", "Georgetown (GEO)", "Asunción (ASU)", "Lima (LIM)", "Zanderij (PBM)", "Montevideo (MVD)", "Caracas (CCS)"];
-const flightTo = ["Buenos Aires (EZE)", "La Paz (LPB)", "Brasilia (BSB)", "Santiago (AMB)", "Bogotá (BOG)", "Quito (UIO)", "Georgetown (GEO)", "Asunción (ASU)", "Lima (LIM)", "Zanderij (PBM)", "Montevideo (MVD)", "Caracas (CCS)"];
+/* Functions */
+let matchCount = 0;
+function compareFlights(sourceFound, destinationFound) {
+    let sourceIndex = selectSource.selectedIndex;
+    let destinationIndex = selectDestination.selectedIndex;
+    if (selectSource.options[sourceIndex].value === sourceFound && selectDestination.options[destinationIndex].value === destinationFound) {
+        matchCount++;
+        console.log(matchCount);
+        main.insertAdjacentElement('afterend', resultsDiv);
+        resultsDiv.innerText = "Vuelos encontrados:";
+        let ul = document.createElement('ul');
+        resultsDiv.appendChild(ul);
+        for(i=0; i<= matchCount; i++) {
+            let li = document.createElement('li');
+            ul.appendChild(li);
+            li.innerHTML = `Origen: ${sourceFound} ${'<br>'} Destino: ${destinationFound}`;
+            console.log(sourceFound, destinationFound);
+        }
+    }else{
+        let ul = document.createElement('ul');
+        resultsDiv.appendChild(ul);
+        let li = document.createElement('li');
+        ul.appendChild(li);
+        li.innerHTML = `No se han encontrado vuelos que coincidan con su busqueda.`;
+    }
+    console.log(matchCount);
+};
 
+/* Events */
 let srcContainer = document.querySelector('.AutoSuggest_inputWrapper');
 let srcInput = document.querySelector('.AutoSuggest_inputWrapper input');
 let selectSource = document.createElement('select');
-
-selectSource.style.padding = '0.3em 0.5em';
 
 srcInput.addEventListener("click", function(event) {
     event.preventDefault();
@@ -13,20 +37,9 @@ srcInput.addEventListener("click", function(event) {
     srcInput.remove();
 });
 
-let optionSource;
-for(let i = 0; i < flightFrom.length; i++){
-    let source = flightFrom[i];
-    optionSource = document.createElement('option');
-    optionSource.value = source;
-    optionSource.text = source;
-    selectSource.appendChild(optionSource);
-}
-
 let destContainer = document.querySelectorAll('.AutoSuggest_inputWrapper')[1];
 let destInput = document.querySelectorAll('.AutoSuggest_inputWrapper input')[1];
 let selectDestination = document.createElement('select');
-
-selectDestination.style.padding = '0.3em 0.5em';
 
 destInput.addEventListener("click", function(event) {
     event.preventDefault();
@@ -34,15 +47,18 @@ destInput.addEventListener("click", function(event) {
     destInput.remove();
 });
 
-let optionDestination;
-for(let i = 0; i < flightTo.length; i++){
-    let destination = flightTo[i];
-    optionDestination = document.createElement('option');
-    optionDestination.value = destination;
-    optionDestination.text = destination;
-    selectDestination.appendChild(optionDestination);
-}
+let cabinNumber = document.querySelector('.Cabin_inputWrapper input');
 
+cabinNumber.addEventListener('blur', function numberLimit(event) {
+    event.preventDefault();
+    if (cabinNumber.value < 1) {
+        cabinNumber.value = 1;
+    }
+    if (cabinNumber.value > 20) {
+        cabinNumber.value = 20;
+    }
+    cabinNumber.text = cabinNumber.value;
+});
 
 let optionCheck1;
 selectSource.addEventListener('change', function(event){
@@ -72,24 +88,37 @@ selectDestination.addEventListener('change', function(event){
     }
 });
 
+
+/* Arrays */
+const flightFrom = ["Buenos Aires (EZE)", "La Paz (LPB)", "Brasilia (BSB)", "Santiago (AMB)", "Bogotá (BOG)", "Quito (UIO)", "Georgetown (GEO)", "Asunción (ASU)", "Lima (LIM)", "Zanderij (PBM)", "Montevideo (MVD)", "Caracas (CCS)"];
+const flightTo = ["Buenos Aires (EZE)", "La Paz (LPB)", "Brasilia (BSB)", "Santiago (AMB)", "Bogotá (BOG)", "Quito (UIO)", "Georgetown (GEO)", "Asunción (ASU)", "Lima (LIM)", "Zanderij (PBM)", "Montevideo (MVD)", "Caracas (CCS)"];
+
+/* Rest of Code */
+selectSource.style.padding = '0.3em 0.5em';
+let optionSource;
+for(let i = 0; i < flightFrom.length; i++){
+    let source = flightFrom[i];
+    optionSource = document.createElement('option');
+    optionSource.value = source;
+    optionSource.text = source;
+    selectSource.appendChild(optionSource);
+}
+
+selectDestination.style.padding = '0.3em 0.5em';
+let optionDestination;
+for(let i = 0; i < flightTo.length; i++){
+    let destination = flightTo[i];
+    optionDestination = document.createElement('option');
+    optionDestination.value = destination;
+    optionDestination.text = destination;
+    selectDestination.appendChild(optionDestination);
+}
+
 const dateContainer = document.querySelector('.Date_inputWrapper input');
 const datepicker = new Datepicker(dateContainer, {
     format: 'dd-mm-yyyy',
     language: 'es'
 }); 
-
-let cabinNumber = document.querySelector('.Cabin_inputWrapper input');
-
-cabinNumber.addEventListener('blur', function numberLimit(event) {
-    event.preventDefault();
-    if (cabinNumber.value < 1) {
-        cabinNumber.value = 1;
-    }
-    if (cabinNumber.value > 20) {
-        cabinNumber.value = 20;
-    }
-    cabinNumber.text = cabinNumber.value;
-});
 
 let myFlights = flightsData;
 const selectedFlights = (key, value) => {localStorage.setItem(key, JSON.stringify(value))};
@@ -120,17 +149,6 @@ let resultsDiv = document.createElement('div');
 resultsDiv.classList.add('results-found');
 resultsDiv.style.display = "block";
 resultsDiv.style.textAlign = "center";
-
-function compareFlights(sourceFound, destinationFound) {
-    let sourceIndex = selectSource.selectedIndex;
-    let destinationIndex = selectDestination.selectedIndex;
-    if (selectSource.options[sourceIndex].value === sourceFound && selectDestination.options[destinationIndex].value === destinationFound) {
-        console.log(true);
-    }else{
-        main.insertAdjacentElement('afterend', resultsDiv);
-        resultsDiv.innerText = "No se han encontrado resultados para la busqueda seleccionada.";
-    }
-};
 
 //Para comparar lowercase use HOF.
 // const newFlightFrom = flightFrom.map(flight => flight.toLowerCase());

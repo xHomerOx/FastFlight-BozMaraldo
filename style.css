@@ -82,6 +82,10 @@ header img{
     background: #05203c;
 }
 
+ul{ 
+    list-style: none;
+}
+
 .carousel-item{
     height: 600px;
 }
