@@ -92,12 +92,23 @@ cabinNumber.addEventListener('blur', function numberLimit(event) {
 });
 
 let myFlights = flightsData;
+const selectedFlights = (key, value) => {localStorage.setItem(key, JSON.stringify(value))};
+console.log(myFlights);
 
-const selectedFlights = (key, value) => { localStorage.setItem(key, value)};
+for (let i = 0; i < myFlights.length; i++) {
+    let flight = myFlights[i];
+    let mySrc = flight.source;
+    let myDest = flight.destination;
 
-for (const flight of myFlights) {
-    selectedFlights(JSON.stringify(flight.source), JSON.stringify(flight.destination));
+    selectedFlights("source", mySrc);
+    selectedFlights("destination", myDest);
 }
+
+let mySubmit = document.querySelector(".BpkButtonBase_bpk-button");
+
+mySubmit.addEventListener('click', function(event) {
+    event.preventDefault();
+});
 
 //Para comparar lowercase use HOF.
 // const newFlightFrom = flightFrom.map(flight => flight.toLowerCase());

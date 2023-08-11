@@ -4,12 +4,6 @@ let flightsData = [];
 for(i = 1; i <= 20; i++) {
     const sourceAirport = Math.floor(Math.random() * airports.length);
     const destinationAirport = Math.floor(Math.random() * airports.length);
-    myFlight = [
-        {
-            "source" : airports[sourceAirport], "destination" : airports[destinationAirport]
-        }
-    ]
+    myFlight = { source: airports[sourceAirport], destination: airports[destinationAirport] }
     flightsData.push(myFlight);
 }
-
-console.log(flightsData);
