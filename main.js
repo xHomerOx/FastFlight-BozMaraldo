@@ -1,29 +1,30 @@
 /* Functions */
 let matchCount = 0;
 function compareFlights(sourceFound, destinationFound) {
+    let matchFound = [];
     let sourceIndex = selectSource.selectedIndex;
     let destinationIndex = selectDestination.selectedIndex;
     if (selectSource.options[sourceIndex].value === sourceFound && selectDestination.options[destinationIndex].value === destinationFound) {
         matchCount++;
-        console.log(matchCount);
         main.insertAdjacentElement('afterend', resultsDiv);
         resultsDiv.innerText = "Vuelos encontrados:";
         let ul = document.createElement('ul');
         resultsDiv.appendChild(ul);
-        for(i=0; i<= matchCount; i++) {
+        matchFound.push({sourceFound, destinationFound});
+
+        if(matchFound.length > 0) {
+            for(i=0; i<= matchCount; i++) {
+                let li = document.createElement('li');
+                ul.appendChild(li);
+                li.innerHTML = `Origen: ${sourceFound} ${'<br>'} Destino: ${destinationFound}`;
+                console.log(sourceFound, destinationFound);
+            }
+        }else{
             let li = document.createElement('li');
             ul.appendChild(li);
-            li.innerHTML = `Origen: ${sourceFound} ${'<br>'} Destino: ${destinationFound}`;
-            console.log(sourceFound, destinationFound);
+            li.innerHTML = `No se han encontrado vuelos que coincidan con su busqueda.`;
         }
-    }else{
-        let ul = document.createElement('ul');
-        resultsDiv.appendChild(ul);
-        let li = document.createElement('li');
-        ul.appendChild(li);
-        li.innerHTML = `No se han encontrado vuelos que coincidan con su busqueda.`;
     }
-    console.log(matchCount);
 };
 
 /* Events */
@@ -137,7 +138,7 @@ for (let i = 0; i < myFlights.length; i++) {
 
     let sourceFound = JSON.parse(localStorage.getItem("source " + i));
     let destinationFound = JSON.parse(localStorage.getItem("destination " + i));
-    
+
     mySubmit.addEventListener('click', function(event){
         event.preventDefault();
         compareFlights(sourceFound, destinationFound);
