@@ -93,22 +93,44 @@ cabinNumber.addEventListener('blur', function numberLimit(event) {
 
 let myFlights = flightsData;
 const selectedFlights = (key, value) => {localStorage.setItem(key, JSON.stringify(value))};
-console.log(myFlights);
 
-for (let i = 0; i < myFlights.length; i++) {
-    let flight = myFlights[i];
-    let mySrc = flight.source;
-    let myDest = flight.destination;
-
-    selectedFlights("source", mySrc);
-    selectedFlights("destination", myDest);
-}
+let mySrc;
+let myDest;
 
 let mySubmit = document.querySelector(".BpkButtonBase_bpk-button");
+for (let i = 0; i < myFlights.length; i++) {
+    let flight = myFlights[i];
+    mySrc = flight.source;
+    myDest = flight.destination;
 
-mySubmit.addEventListener('click', function(event) {
-    event.preventDefault();
-});
+    selectedFlights("source " + i, mySrc);
+    selectedFlights("destination " + i, myDest);
+
+    let sourceFound = JSON.parse(localStorage.getItem("source " + i));
+    let destinationFound = JSON.parse(localStorage.getItem("destination " + i));
+    
+    mySubmit.addEventListener('click', function(event){
+        event.preventDefault();
+        compareFlights(sourceFound, destinationFound);
+    });
+}
+
+let main = document.getElementsByClassName('SearchControls_grid')[0];
+let resultsDiv = document.createElement('div');
+resultsDiv.classList.add('results-found');
+resultsDiv.style.display = "block";
+resultsDiv.style.textAlign = "center";
+
+function compareFlights(sourceFound, destinationFound) {
+    let sourceIndex = selectSource.selectedIndex;
+    let destinationIndex = selectDestination.selectedIndex;
+    if (selectSource.options[sourceIndex].value === sourceFound && selectDestination.options[destinationIndex].value === destinationFound) {
+        console.log(true);
+    }else{
+        main.insertAdjacentElement('afterend', resultsDiv);
+        resultsDiv.innerText = "No se han encontrado resultados para la busqueda seleccionada.";
+    }
+};
 
 //Para comparar lowercase use HOF.
 // const newFlightFrom = flightFrom.map(flight => flight.toLowerCase());
