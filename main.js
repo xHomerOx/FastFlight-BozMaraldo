@@ -21,9 +21,11 @@ function compareFlights(matchedFlights) {
         resultsDiv.innerHTML = "<strong>Vuelos encontrados:</strong>";
         let ul = document.createElement('ul');
         resultsDiv.appendChild(ul);
-        for (let flight of matchedFlights) {
-
-            const airline = Math.floor(Math.random() * myAirlines.length);
+        let flight;
+        let airline;
+        for (flight of matchedFlights) {
+            
+            airline = Math.floor(Math.random() * myAirlines.length);
 
             let li = document.createElement('li');
             ul.appendChild(li);
@@ -39,9 +41,10 @@ function compareFlights(matchedFlights) {
                 event.preventDefault();
                 userData(flight.source, flight.destination, myAirlines[airline].name, dateContainer.value);
             });
-
-            return flight.source + flight.destination + myAirlines[airline].name + dateContainer.value;
         }
+
+        return flight.source + flight.destination + myAirlines[airline].name + dateContainer.value;
+
     }else{
         li.innerHTML = `No se han encontrado vuelos que coincidan con su busqueda.`;
     }
