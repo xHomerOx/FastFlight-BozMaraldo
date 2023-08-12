@@ -103,7 +103,7 @@ function userData(src, dest, airline, date) {
         event.preventDefault(); 
 
         const user = document.createElement('div');
-        user.innerHTML = `${'<strong>'}Reserva confirmada:${'</strong>'} ${'<br>'}Origen:${src}${'<br>'}Destino:${dest}${'<br>'}Empresa:${airline}${'<br>'}Fecha:${date}${'<br>'}Pasajeros:${passengersAmmount}${'<br>'}Que tenga un excelente vuelo.`;
+        user.innerHTML = `${'<strong>'}Reserva confirmada: ${'</strong>'} ${'<br>'}Origen: ${src}${'<br>'}Destino: ${dest}${'<br>'}Empresa: ${airline}${'<br>'}Fecha: ${date}${'<br>'}Pasajeros: ${passengersAmmount}${'<br>'}Que tenga un excelente vuelo.`;
 
         form.appendChild(user);
     });
