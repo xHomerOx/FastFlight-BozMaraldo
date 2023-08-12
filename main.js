@@ -1,12 +1,11 @@
-/* Functions */
+
+/* DOM Creation */
 let main = document.getElementsByClassName('SearchControls_grid')[0];
 
 let resultsDiv = document.createElement('div');
 resultsDiv.classList.add('results-found');
 resultsDiv.style.display = "block";
 resultsDiv.style.textAlign = "center";
-
-let matchCount = 0;
 
 main.insertAdjacentElement('afterend', resultsDiv);
 
@@ -16,35 +15,67 @@ resultsDiv.appendChild(ul);
 let li = document.createElement('li');
 ul.appendChild(li);
 
-function compareFlights(sourceFound, destinationFound) {
-    let matchFound = [];
+/* Functions */
+function compareFlights(matchedFlights) {
 
-    let sourceIndex = selectSource.selectedIndex;
-    let destinationIndex = selectDestination.selectedIndex;
-    if (selectSource.options[sourceIndex].value === sourceFound && selectDestination.options[destinationIndex].value === destinationFound) {
-        matchCount++;
-
-        matchFound.push({sourceFound, destinationFound});
-
-        resultsDiv.innerText = "Vuelos encontrados:";
+    if(matchedFlights.length > 0) {
+        resultsDiv.innerHTML = "<strong>Vuelos encontrados:</strong>";
         let ul = document.createElement('ul');
         resultsDiv.appendChild(ul);
+        for (let flight of matchedFlights) {
 
-        if(matchFound.length > 0) {
-            for(i=0; i<= matchCount; i++) {
-                let li = document.createElement('li');
-                ul.appendChild(li);
-                li.innerHTML = `Origen: ${sourceFound}${'<br>'}Destino: ${destinationFound}`;
-                console.log(sourceFound, destinationFound);
-            }
-        }else{
-            li.innerHTML = `No se han encontrado vuelos que coincidan con su busqueda.`;
+            const airline = Math.floor(Math.random() * myAirlines.length);
+
+            let li = document.createElement('li');
+            ul.appendChild(li);
+
+            let aTag = document.createElement('a');
+            aTag.href = '#';
+            aTag.innerHTML = `Origen: ${flight.source}${'<br>'}Destino: ${flight.destination}${'<br>'}Operado por: ${myAirlines[airline].name}${'<br>'}Fecha: ${dateContainer.value}${'<br>'}`;
+            li.appendChild(aTag);
+            let br = document.createElement('br');
+            ul.appendChild(br);
+
+            aTag.addEventListener('click', function(event){
+                event.preventDefault();
+                userData();
+            });
+
         }
-
     }else{
         li.innerHTML = `No se han encontrado vuelos que coincidan con su busqueda.`;
     }
 };
+
+function userData() {
+    
+    const passengersWrapper = document.querySelector('.Cabin_inputWrapper input');
+    const passengersAmmount = passengersWrapper.value;
+
+    const form = document.createElement('form');
+    form.classList.add("passenger-data");
+
+    for (let i = 1; i <= passengersAmmount; i++) {
+
+        const nameLabel = document.createElement('label');
+        nameLabel.textContent = `Nombre del pasajero ${i}: `;
+        const nameInput = document.createElement('input');
+        nameLabel.appendChild(nameInput);
+    
+        const idLabel = document.createElement('label');
+        idLabel.textContent = `Documento del pasajero ${i}: `;
+        const idInput = document.createElement('input');
+        idLabel.appendChild(idInput);
+    
+        form.appendChild(nameLabel);
+        form.appendChild(document.createElement('br'));
+        form.appendChild(idLabel);
+        form.appendChild(document.createElement('br'));
+    }
+
+    main.insertAdjacentElement('afterend', form);
+
+}
 
 /* Events */
 let srcContainer = document.querySelector('.AutoSuggest_inputWrapper');
@@ -81,8 +112,10 @@ cabinNumber.addEventListener('blur', function numberLimit(event) {
 });
 
 let optionCheck1;
+let sourceSelected;
 selectSource.addEventListener('change', function(event){
     optionCheck1 = event.target.value;
+    let sourceIndex = selectSource.selectedIndex;
     for (let i = 0; i < selectDestination.options.length; i++) {
         if(selectDestination.options[i].value === optionCheck1) {
             selectSource.options[i].setAttribute('selected', 'selected');
@@ -92,11 +125,14 @@ selectSource.addEventListener('change', function(event){
             selectDestination.options[i].style.display = "block";
         }
     }
+    sourceSelected = selectDestination.options[sourceIndex].value;
 });
 
 let optionCheck2;
+let destinationSelected;
 selectDestination.addEventListener('change', function(event){
     optionCheck2 = event.target.value;
+    let destinationIndex = selectDestination.selectedIndex;
     for (let i = 0; i < selectSource.options.length; i++) {
         if(selectSource.options[i].value === optionCheck2) {
             selectDestination.options[i].setAttribute('selected', 'selected');
@@ -106,12 +142,45 @@ selectDestination.addEventListener('change', function(event){
             selectSource.options[i].style.display = "block";
         }
     }
+    destinationSelected = selectDestination.options[destinationIndex].value;
 });
 
+let mySubmit = document.querySelector(".BpkButtonBase_bpk-button");
+mySubmit.addEventListener('click', function(event) {
+    event.preventDefault();
+    const matchedFlights = flightsFound.filter(flight => flight.source === sourceSelected && flight.destination === destinationSelected);
+
+    console.log(matchedFlights);
+    
+    compareFlights(matchedFlights);
+});
 
 /* Arrays */
 const flightFrom = ["Buenos Aires (EZE)", "La Paz (LPB)", "Brasilia (BSB)", "Santiago (AMB)", "Bogotá (BOG)", "Quito (UIO)", "Georgetown (GEO)", "Asunción (ASU)", "Lima (LIM)", "Zanderij (PBM)", "Montevideo (MVD)", "Caracas (CCS)"];
 const flightTo = ["Buenos Aires (EZE)", "La Paz (LPB)", "Brasilia (BSB)", "Santiago (AMB)", "Bogotá (BOG)", "Quito (UIO)", "Georgetown (GEO)", "Asunción (ASU)", "Lima (LIM)", "Zanderij (PBM)", "Montevideo (MVD)", "Caracas (CCS)"];
+
+const myAirlines = [
+    american = {
+        name: "American Airlines",
+        code: "AA"
+    },
+    aerolineas = {
+        name: "Aerolineas Argentinas", 
+        code: "AR"
+    },
+    delta = {
+        name: "Delta Airlines",
+        code: "DL"
+    },
+    virgin = {
+        name: "Virgin Atlantic", 
+        code: "VS"
+    },
+    flybondi = {
+        name: "FlyBondi", 
+        code: "FO"
+    }        
+]
 
 /* Rest of Code */
 selectSource.style.padding = '0.3em 0.5em';
@@ -145,8 +214,10 @@ const selectedFlights = (key, value) => {localStorage.setItem(key, JSON.stringif
 
 let mySrc;
 let myDest;
-
-let mySubmit = document.querySelector(".BpkButtonBase_bpk-button");
+let sourceFound;
+let destinationFound;
+let flightsFound = new Array();
+let flightsSet = new Array();
 
 for (let i = 0; i < myFlights.length; i++) {
     let flight = myFlights[i];
@@ -156,15 +227,10 @@ for (let i = 0; i < myFlights.length; i++) {
     selectedFlights("source " + i, mySrc);
     selectedFlights("destination " + i, myDest);
 
-    let sourceFound = JSON.parse(localStorage.getItem("source " + i));
-    let destinationFound = JSON.parse(localStorage.getItem("destination " + i));
-    
-    console.log(sourceFound, destinationFound);
+    sourceFound = JSON.parse(localStorage.getItem("source " + i));
+    destinationFound = JSON.parse(localStorage.getItem("destination " + i));
 
-    mySubmit.addEventListener('click', function(event){
-        event.preventDefault();
-        compareFlights(sourceFound, destinationFound);
-    });
+    flightsFound.push({'source': sourceFound, 'destination': destinationFound});
 }
 
 //Para comparar lowercase use HOF.
@@ -173,28 +239,7 @@ for (let i = 0; i < myFlights.length; i++) {
 
 // //Selecciona Idioma dependiendo de la variable.
 // if (lang == "Spanish") {
-//     const myAirlines = [
-//         american = {
-//             name: "American Airlines",
-//             code: "AA"
-//         },
-//         aerolineas = {
-//             name: "Aerolineas Argentinas", 
-//             code: "AR"
-//         },
-//         delta = {
-//             name: "Delta Airlines",
-//             code: "DL"
-//         },
-//         virgin = {
-//             name: "Virgin Atlantic", 
-//             code: "VS"
-//         },
-//         flybondi = {
-//             name: "FlyBondi", 
-//             code: "FO"
-//         }
-//     ]
+//     
 
 //     //Selecciono aerolinea, si no es ninguna, flybondi sera la opcion por defecto.
 //     const selectAirline = () => {

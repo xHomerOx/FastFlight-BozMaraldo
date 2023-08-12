@@ -87,6 +87,14 @@ ul{
     list-style: none;
 }
 
+a{
+    text-decoration: none;
+}
+
+.passenger-data {
+    text-align: center;
+}
+
 .carousel-item{
     height: 600px;
 }
