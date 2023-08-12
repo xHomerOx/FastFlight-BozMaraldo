@@ -24,7 +24,7 @@ function compareFlights(matchedFlights) {
         let flight;
         let airline;
         for (flight of matchedFlights) {
-            
+
             airline = Math.floor(Math.random() * myAirlines.length);
 
             let li = document.createElement('li');
@@ -186,8 +186,6 @@ mySubmit.addEventListener('click', function(event) {
     event.preventDefault();
     const matchedFlights = flightsFound.filter(flight => flight.source === sourceSelected && flight.destination === destinationSelected);
 
-    console.log(matchedFlights);
-    
     compareFlights(matchedFlights);
 });
 
