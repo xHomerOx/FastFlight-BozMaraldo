@@ -110,14 +110,22 @@ function userData(src, dest, airline, date) {
 
     main.insertAdjacentElement('afterend', form);
 
+    let disableSubmit = false;
+
     submitButton.addEventListener("click", function(event) {
         if(document.querySelector('.passenger-data').checkValidity()){
-            event.preventDefault(); 
+            event.preventDefault();
+
+            if (disableSubmit) {
+                event.preventDefault();
+                return;
+            }
 
             const user = document.createElement('div');
             user.innerHTML = `${'<strong>'}Reserva confirmada: ${'</strong>'} ${'<br>'}Origen: ${src}${'<br>'}Destino: ${dest}${'<br>'}Empresa: ${airline}${'<br>'}Fecha: ${date}${'<br>'}Pasajeros: ${passengersAmmount}${'<br>'}Que tenga un excelente vuelo.`;
 
             form.appendChild(user);
+            disableSubmit = true;
         }
     });
 
