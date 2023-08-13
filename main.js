@@ -24,15 +24,21 @@ function compareFlights(matchedFlights) {
         let flight;
         let airline;
         for (flight of matchedFlights) {
-
+            
             airline = Math.floor(Math.random() * myAirlines.length);
+
+            if (!localStorage.getItem("Airline")) {      
+                localStorage.setItem("Airline", airline);
+            }
+
+            let airlineStorage = localStorage.getItem("Airline");
 
             let li = document.createElement('li');
             ul.appendChild(li);
 
             let aTag = document.createElement('a');
             aTag.href = '#';
-            aTag.innerHTML = `Origen: ${flight.source}${'<br>'}Destino: ${flight.destination}${'<br>'}Operado por: ${myAirlines[airline].name}${'<br>'}Fecha: ${dateContainer.value}${'<br>'}`;
+            aTag.innerHTML = `Origen: ${flight.source}${'<br>'}Destino: ${flight.destination}${'<br>'}Operado por: ${myAirlines[airlineStorage].name}${'<br>'}Fecha: ${dateContainer.value}${'<br>'}`;
             li.appendChild(aTag);
             let br = document.createElement('br');
             ul.appendChild(br);
