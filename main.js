@@ -71,12 +71,14 @@ function userData(src, dest, airline, date) {
         const nameInput = document.createElement('input');
         nameLabel.appendChild(nameInput);
         nameInput.setAttribute("type", "text");
+        nameInput.required = true;
 
         const idLabel = document.createElement('label');
         idLabel.textContent = `Documento del pasajero ${i}: `;
         const idInput = document.createElement('input');
         idLabel.appendChild(idInput);
         idInput.setAttribute("type", "number");
+        idInput.required = true;
 
         form.appendChild(nameLabel);
         form.appendChild(document.createElement('br'));
@@ -109,12 +111,14 @@ function userData(src, dest, airline, date) {
     main.insertAdjacentElement('afterend', form);
 
     submitButton.addEventListener("click", function(event) {
-        event.preventDefault(); 
+        if(document.querySelector('.passenger-data').checkValidity()){
+            event.preventDefault(); 
 
-        const user = document.createElement('div');
-        user.innerHTML = `${'<strong>'}Reserva confirmada: ${'</strong>'} ${'<br>'}Origen: ${src}${'<br>'}Destino: ${dest}${'<br>'}Empresa: ${airline}${'<br>'}Fecha: ${date}${'<br>'}Pasajeros: ${passengersAmmount}${'<br>'}Que tenga un excelente vuelo.`;
+            const user = document.createElement('div');
+            user.innerHTML = `${'<strong>'}Reserva confirmada: ${'</strong>'} ${'<br>'}Origen: ${src}${'<br>'}Destino: ${dest}${'<br>'}Empresa: ${airline}${'<br>'}Fecha: ${date}${'<br>'}Pasajeros: ${passengersAmmount}${'<br>'}Que tenga un excelente vuelo.`;
 
-        form.appendChild(user);
+            form.appendChild(user);
+        }
     });
 
 }
@@ -189,10 +193,11 @@ selectDestination.addEventListener('change', function(event){
 
 let mySubmit = document.querySelector(".BpkButtonBase_bpk-button");
 mySubmit.addEventListener('click', function(event) {
-    event.preventDefault();
-    const matchedFlights = flightsFound.filter(flight => flight.source === sourceSelected && flight.destination === destinationSelected);
-
-    compareFlights(matchedFlights);
+    if(document.querySelector('#search-form').checkValidity()){
+        event.preventDefault();
+        const matchedFlights = flightsFound.filter(flight => flight.source === sourceSelected && flight.destination === destinationSelected);
+        compareFlights(matchedFlights);
+    }
 });
 
 /* Arrays */
