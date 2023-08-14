@@ -14,6 +14,7 @@ resultsDiv.appendChild(ul);
 let li = document.createElement('li');
 ul.appendChild(li);
 
+let aTag;
 /* Functions */
 function compareFlights(matchedFlights) {
 
@@ -36,7 +37,7 @@ function compareFlights(matchedFlights) {
             let li = document.createElement('li');
             ul.appendChild(li);
 
-            let aTag = document.createElement('a');
+            aTag = document.createElement('a');
             aTag.href = '#';
             aTag.innerHTML = `Origen: ${flight.source}${'<br>'}Destino: ${flight.destination}${'<br>'}Operado por: ${myAirlines[airlineStorage].name}${'<br>'}Fecha: ${dateContainer.value}${'<br>'}`;
             li.appendChild(aTag);
@@ -52,6 +53,23 @@ function compareFlights(matchedFlights) {
         return flight.source + flight.destination + myAirlines[airline].name + dateContainer.value;
 
     }else{
+        let liArray = document.querySelectorAll('li');
+        for (let i = 0; i < liArray.length; i++) {
+            let newLi = liArray[i];
+
+            resultsDiv.innerHTML = "";
+            aTag = li.querySelector("a");
+
+            if (aTag) {
+                newLi.removeChild(aTag);
+            }
+        }
+
+        ul = document.createElement('ul');
+        resultsDiv.appendChild(ul);
+        li = document.createElement('li');
+        ul.appendChild(li);
+
         li.innerHTML = `No se han encontrado vuelos que coincidan con su busqueda.`;
     }
 };
