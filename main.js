@@ -15,6 +15,7 @@ let li = document.createElement('li');
 ul.appendChild(li);
 
 let aTag;
+
 /* Functions */
 function compareFlights(matchedFlights) {
 
