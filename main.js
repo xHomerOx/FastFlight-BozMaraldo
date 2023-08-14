@@ -58,7 +58,7 @@ function compareFlights(matchedFlights) {
             let newLi = liArray[i];
 
             resultsDiv.innerHTML = "";
-            aTag = li.querySelector("a");
+            aTag = newLi.querySelector("a");
 
             if (aTag) {
                 newLi.removeChild(aTag);
