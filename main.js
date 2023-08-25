@@ -151,25 +151,8 @@ function userData(src, dest, airline, date) {
 }
 
 /* Events */
-let srcContainer = document.querySelector('.AutoSuggest_inputWrapper');
-let srcInput = document.querySelector('.AutoSuggest_inputWrapper input');
-let selectSource = document.createElement('select');
-
-srcInput.addEventListener("click", function(event) {
-    event.preventDefault();
-    srcContainer.appendChild(selectSource);
-    srcInput.remove();
-});
-
-let destContainer = document.querySelectorAll('.AutoSuggest_inputWrapper')[1];
-let destInput = document.querySelectorAll('.AutoSuggest_inputWrapper input')[1];
-let selectDestination = document.createElement('select');
-
-destInput.addEventListener("click", function(event) {
-    event.preventDefault();
-    destContainer.appendChild(selectDestination);
-    destInput.remove();
-});
+let selectSource = document.querySelector('#originInput-input');
+let selectDestination = document.querySelector('#destinationInput-input');
 
 let cabinNumber = document.querySelector('.Cabin_inputWrapper input');
 

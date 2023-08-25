@@ -21,7 +21,9 @@
                         <div class="AutoSuggest_inputTextWrapper">
                             <span class="OriginDesktopSearchControlGroup_inputLabel">Desde</span>
                             <div class="AutoSuggest_inputWrapper">
-                                <input aria-activedescendant="" aria-autocomplete="list" aria-controls="originInput-menu" aria-expanded="false" aria-labelledby="originInput-label" autocomplete="off" id="originInput-input" role="combobox" type="text" autocapitalize="on" autocorrect="off" placeholder="País, ciudad o aeropuerto" spellcheck="false" maxlength="256" enterkeyhint="Buscar" required>
+                                <select aria-activedescendant="" aria-autocomplete="list" aria-controls="originInput-menu" aria-expanded="false" aria-labelledby="originInput-label" autocomplete="off" id="originInput-input" role="combobox" type="text" autocapitalize="on" autocorrect="off" spellcheck="false" maxlength="256" enterkeyhint="Buscar" required>
+                                    <option value="default" selected disabled hidden>Seleccione origen</option>
+                                </select>
                             </div>
                         </div>
                     </label>
@@ -31,7 +33,9 @@
                     <div class="AutoSuggest_inputTextWrapper">
                         <span>A</span>
                             <div class="AutoSuggest_inputWrapper">
-                                <input aria-activedescendant="" aria-autocomplete="list" aria-controls="destinationInput-menu" aria-expanded="false" aria-labelledby="destinationInput-label" autocomplete="off" id="destinationInput-input" role="combobox" type="text" autocapitalize="on" autocorrect="off" placeholder="País, ciudad o aeropuerto" spellcheck="false" maxlength="256" required>
+                                <select aria-activedescendant="" aria-autocomplete="list" aria-controls="destinationInput-menu" aria-expanded="false" aria-labelledby="destinationInput-label" autocomplete="off" id="destinationInput-input" role="combobox" type="text" autocapitalize="on" autocorrect="off" spellcheck="false" maxlength="256" enterkeyhint="Buscar" required>
+                                    <option value="default" selected disabled hidden>Seleccione destino</option>
+                                </select>
                             </div>
                     </div>
                     </label>
@@ -42,9 +46,11 @@
                 <div class="DateSearchControlsGroup_datesContaine">
                     <div class="DateSearchControlsGroup_datesSearchControlButton SearchControlButton_container" tabindex="-1">
                         <button type="button" class="DateSearchControlsGroup_datesSearchControlButton" data-testid="depart-btn">
-                            <span class="SearchControlButton_label">Fecha</span>
-                            <div class="Date_inputWrapper">
-                                <input aria-activedescendant="" aria-autocomplete="list" aria-controls="dateInput-menu" aria-expanded="false" aria-labelledby="dateInput-label" autocomplete="off" id="dateInput-input" role="combobox" type="text" autocapitalize="on" autocorrect="off" placeholder="Fecha" spellcheck="false" maxlength="256" required>
+                            <div class="AutoSuggest_inputTextWrapper">
+                                <span class="SearchControlButton_label">Fecha</span>
+                                <div class="Date_inputWrapper">
+                                    <input aria-activedescendant="" aria-autocomplete="list" aria-controls="dateInput-menu" aria-expanded="false" aria-labelledby="dateInput-label" autocomplete="off" id="dateInput-input" role="combobox" type="text" autocapitalize="on" autocorrect="off" placeholder="Fecha" spellcheck="false" maxlength="256" required>
+                                </div>
                             </div>
                         </button>
                     </div>
@@ -52,9 +58,11 @@
                 <div class="CabinClassTravellerSearchControlGroup_travellerContainer">
                     <div class="CabinClassTravellerSearchControlGroup_traveller SearchControlButton_container" tabindex="-1">
                         <button type="button" class="SearchControlButton_searchControlBtn CabinClassTravellerSearchControlGroup_traveller" aria-label="1 Adulto, Turista" data-testid="traveller-button">
-                            <span class="SearchControlButton_value">Viajeros y clase de cabina</span>
-                            <div class="Cabin_inputWrapper">
-                                <input aria-activedescendant="" aria-autocomplete="list" aria-controls="cabinInput-menu" aria-expanded="false" aria-labelledby="cabinInput-label" autocomplete="off" id="cabinInput-input" role="combobox" type="text" autocapitalize="on" autocorrect="off" placeholder="Pasajeros" spellcheck="false" maxlength="256" required>
+                            <div class="AutoSuggest_inputTextWrapper">
+                                <span class="SearchControlButton_value">Viajeros y clase de cabina</span>
+                                <div class="Cabin_inputWrapper">
+                                    <input aria-activedescendant="" aria-autocomplete="list" aria-controls="cabinInput-menu" aria-expanded="false" aria-labelledby="cabinInput-label" autocomplete="off" id="cabinInput-input" role="combobox" type="text" autocapitalize="on" autocorrect="off" placeholder="Pasajeros" spellcheck="false" maxlength="256" required>
+                                </div>
                             </div>
                         </button>
                     </div>
