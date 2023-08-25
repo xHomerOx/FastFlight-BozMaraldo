@@ -1,4 +1,60 @@
-/* DOM Creation */
+/* --------------------------------------------- API Call ------------------------------------------- */
+
+async function flightCall(url, options) {
+    url = 'https://flight-radar1.p.rapidapi.com/airports/list',
+    options = {
+        method: 'GET',
+        headers: {
+            'X-RapidAPI-Key': '7358e78926mshdfd3d3ac3c89ca6p13b0adjsn2d3557e441b7',
+            'X-RapidAPI-Host': 'flight-radar1.p.rapidapi.com'
+        }
+    };
+    try {
+        let airSpinner = document.querySelector(".loader");
+        let mainContent = document.querySelector(".mainContent");
+        let searchControl = document.querySelector(".SearchControls_grid");
+        searchControl.classList.add("blueBackground");
+        airSpinner.style.display = 'block';
+        mainContent.style.display = 'none';
+        const response = await fetch(url, options);
+        const result = await response.json();
+        searchControl.classList.remove("blueBackground");
+        searchControl.classList.add("whiteBackground");
+        airSpinner.style.display = 'none';
+        mainContent.style.display = 'block';
+        return result;
+    } catch (error) {
+        console.error(error);
+    }
+  }
+
+  const myAirports = flightCall();
+
+    myAirports.then(airports => {
+        console.log(airports.rows);
+        let optionSource;
+        let optionDestination;
+        for(let i = 0; i < airports.rows.length; i++){
+            let source = airports.rows[i].name + ' - ' + airports.rows[i].country;
+            optionSource = document.createElement('option');
+            optionSource.value = airports.rows[i].iata;
+            optionSource.text = source;
+            selectSource.appendChild(optionSource);[0].iata
+        }
+
+        for(let i = 0; i < airports.rows.length; i++){
+            let destination = airports.rows[i].name + ' - ' + airports.rows[i].country;
+            optionDestination = document.createElement('option');
+            optionDestination.value = airports.rows[i].iata;
+            optionDestination.text = destination;
+            selectDestination.appendChild(optionDestination);
+        }
+    }).catch(error => {
+        console.error(error);
+    });
+
+/* --------------------------------------------- DOM Creation ------------------------------------------- */
+
 let main = document.getElementsByClassName('SearchControls_grid')[0];
 
 let resultsDiv = document.createElement('div');
@@ -211,7 +267,6 @@ mySubmit.addEventListener('click', function(event) {
 });
 
 /* Arrays */
-const flightFrom = ["Buenos Aires (EZE)", "La Paz (LPB)", "Brasilia (BSB)", "Santiago (AMB)", "Bogotá (BOG)", "Quito (UIO)", "Georgetown (GEO)", "Asunción (ASU)", "Lima (LIM)", "Zanderij (PBM)", "Montevideo (MVD)", "Caracas (CCS)"];
 const flightTo = ["Buenos Aires (EZE)", "La Paz (LPB)", "Brasilia (BSB)", "Santiago (AMB)", "Bogotá (BOG)", "Quito (UIO)", "Georgetown (GEO)", "Asunción (ASU)", "Lima (LIM)", "Zanderij (PBM)", "Montevideo (MVD)", "Caracas (CCS)"];
 
 const myAirlines = [
@@ -238,25 +293,6 @@ const myAirlines = [
 ]
 
 /* Rest of Code */
-selectSource.style.padding = '0.3em 0.5em';
-let optionSource;
-for(let i = 0; i < flightFrom.length; i++){
-    let source = flightFrom[i];
-    optionSource = document.createElement('option');
-    optionSource.value = source;
-    optionSource.text = source;
-    selectSource.appendChild(optionSource);
-}
-
-selectDestination.style.padding = '0.3em 0.5em';
-let optionDestination;
-for(let i = 0; i < flightTo.length; i++){
-    let destination = flightTo[i];
-    optionDestination = document.createElement('option');
-    optionDestination.value = destination;
-    optionDestination.text = destination;
-    selectDestination.appendChild(optionDestination);
-}
 
 const dateContainer = document.querySelector('.Date_inputWrapper input');
 const datepicker = new Datepicker(dateContainer, {
@@ -264,26 +300,26 @@ const datepicker = new Datepicker(dateContainer, {
     language: 'es'
 }); 
 
-let myFlights = flightsData;
-const selectedFlights = (key, value) => {localStorage.setItem(key, JSON.stringify(value))};
+// let myFlights = flightsData;
+// const selectedFlights = (key, value) => {localStorage.setItem(key, JSON.stringify(value))};
 
-let mySrc;
-let myDest;
-let sourceFound;
-let destinationFound;
-let flightsFound = new Array();
-let flightsSet = new Array();
+// let mySrc;
+// let myDest;
+// let sourceFound;
+// let destinationFound;
+// let flightsFound = new Array();
+// let flightsSet = new Array();
 
-for (let i = 0; i < myFlights.length; i++) {
-    let flight = myFlights[i];
-    mySrc = flight.source;
-    myDest = flight.destination;
+// for (let i = 0; i < myFlights.length; i++) {
+//     let flight = myFlights[i];
+//     mySrc = flight.source;
+//     myDest = flight.destination;
 
-    selectedFlights("source " + i, mySrc);
-    selectedFlights("destination " + i, myDest);
+//     selectedFlights("source " + i, mySrc);
+//     selectedFlights("destination " + i, myDest);
 
-    sourceFound = JSON.parse(localStorage.getItem("source " + i));
-    destinationFound = JSON.parse(localStorage.getItem("destination " + i));
+//     sourceFound = JSON.parse(localStorage.getItem("source " + i));
+//     destinationFound = JSON.parse(localStorage.getItem("destination " + i));
 
-    flightsFound.push({'source': sourceFound, 'destination': destinationFound});
-}
+//     flightsFound.push({'source': sourceFound, 'destination': destinationFound});
+// }
