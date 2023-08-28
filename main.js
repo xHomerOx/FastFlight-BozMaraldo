@@ -101,7 +101,7 @@ function filteredAirports(airports) {
 }
 
 
-/* Funcion que llama a otra API Paga para obtener los datos de la busqueda */
+/* Funcion que llama a otra API Paga para obtener los datos de la busqueda (Usar poco por motivos de limite diario) */
 let sourceSelected, destinationSelected, selectedDate, passengersAmm;
 
 async function flightScan(sourceSelected, destinationSelected, selectedDate) {
