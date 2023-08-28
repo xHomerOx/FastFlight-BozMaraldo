@@ -137,7 +137,21 @@ function compareFlights(matchedFlights) {
         let ul = document.createElement('ul');
         resultsDiv.appendChild(ul);
 
-        let flight, airline;
+        let flight, airline, flightDate;
+
+        class Airline {
+            constructor(code, name) {
+                this.code = code;
+                this.name = name;
+            }
+        }
+        
+        const aerolineas = new Airline("AR", "Aerolíneas Argentinas");
+        const latam = new Airline("LA", "LATAM Airlines");
+        const gol = new Airline("G3", "Gol Linhas Aéreas");
+        const boliviana = new Airline("OB", "Boliviana de Aviación");
+        const flybondi = new Airline("FO", "Flybondi");
+
         for (flight of flightResults) {
 
             console.log(flight);
@@ -168,21 +182,26 @@ function compareFlights(matchedFlights) {
 
             if(airline.startsWith("AR")) {
                 img.src = './assets/AR.png';
+                airline = aerolineas.name;
             }else if (airline.startsWith("LA")) {
                 img.src = './assets/LA.png';
+                airline = latam.name;
             }else if (airline.startsWith("G3")) {
                 img.src = './assets/G3.png';
+                airline = gol.name;
             }else if (airline.startsWith("OB")) {
                 img.src = './assets/OB.png';
+                airline = boliviana.name;
             }else{
                 img.src = './assets/FO.png';
+                airline = flybondi.name;
             }
 
             logo.appendChild(img);
             div.appendChild(logo);
 
             let flightTime = flight.departureAirport.time;
-            let flightDate = new Date(flightTime);
+            flightDate = new Date(flightTime);
 
             const day = String(flightDate.getDate());
             const month = String(flightDate.getMonth() + 1);
@@ -204,7 +223,8 @@ function compareFlights(matchedFlights) {
             event.preventDefault();
             selectedOption.forEach(unselected => unselected.removeAttribute('selected', 'selected'));
             selected.setAttribute('selected', 'selected');
-            console.log(selected);
+            
+            userData(flight.departureAirport.city, flight.arrivalAirport.city, airline, flightDate);
         }));  
 
     }else{
@@ -233,7 +253,7 @@ function compareFlights(matchedFlights) {
 
 
 function userData(src, dest, airline, date) {
-    
+
     const passengersWrapper = document.querySelector('.Cabin_inputWrapper input');
     const passengersAmmount = passengersWrapper.value;
 
@@ -304,6 +324,9 @@ function userData(src, dest, airline, date) {
             disableSubmit = true;
         }
     });
+
+    let oldMain = document.querySelector('.SearchControls_grid');
+    oldMain.remove();
 
 }
 
@@ -388,7 +411,7 @@ mySubmit.addEventListener('click', function(event) {
                 newUl.removeChild(aTag);
             }
         }
-        
+
         loader.style.display = 'block'; 
         flightScan(sourceSelected, destinationSelected, selectedDate).then(flight => {
             compareFlights(flight);
