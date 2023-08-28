@@ -314,6 +314,7 @@ mySubmit.addEventListener('click', function(event) {
     if(document.querySelector('#search-form').checkValidity()){
         event.preventDefault();
         flightScan(sourceSelected, destinationSelected, selectedDate).then(flight => {
+            compareFlights(flight);
             console.log(flight);
         }).catch(error => {
             console.error(error);
