@@ -45,7 +45,6 @@ async function flightCall(url, options) {
         searchControl.classList.add("whiteBackground");
         airSpinner.style.display = 'none';
         mainContent.style.display = 'block';
-
         return result;
     } catch (error) {
         console.error(error);
@@ -79,7 +78,6 @@ function filteredAirports(airports) {
         airport.country.includes("Chile") || 
         airport.country.includes("Peru") || 
         airport.country.includes("Paraguay"));
-        console.log(americanAirports);
 
     americanAirports.sort((a, b) => (a.country > b.country) ? 1 : (a.country === b.country) ? ((a.name > b.name) ? 1 : -1) : -1 );
 
@@ -116,7 +114,6 @@ async function flightScan(sourceSelected, destinationSelected, selectedDate) {
     try {
         const response = await fetch(url, options);
         const result = await response.json();
-        console.log(result);
         return result;
 
     } catch (error) {
@@ -129,31 +126,85 @@ async function flightScan(sourceSelected, destinationSelected, selectedDate) {
 /* Busco los vuelos */
 function compareFlights(matchedFlights) {
 
-    if(matchedFlights.length > 0) {
+    let flightResults = matchedFlights.results;
+
+    if(flightResults?.length > 0) {
         resultsDiv.innerHTML = "<strong>Vuelos encontrados:</strong>";
         let ul = document.createElement('ul');
         resultsDiv.appendChild(ul);
-        let flight;
-        let airline;
-        for (flight of matchedFlights) {
 
-            let li = document.createElement('li');
-            ul.appendChild(li);
+        let flight, airline;
+        for (flight of flightResults) {
 
+            console.log(flight);
+
+            let div = document.createElement('div');
+            ul.appendChild(div);   
+            div.classList.add('BpkTicket_bpk-ticket');
+            div.innerHTML = `Desde: ${flight.departureAirport.city}  ${flight.departureAirport.code} ${'<br>'}Hasta: ${flight.arrivalAirport.city} ${flight.arrivalAirport.code} ${'<br>'} Número de vuelo: ${flight.flight_code}`
+            let flightType = document.createElement('div');
+            div.appendChild(flightType);
+
+            if (flight.stops === 'Direct') {
+                flightType.classList.add('flight-type');
+                flightType.innerHTML = 'Directo';
+            } else {
+                flightType.classList.add('flight-stops');
+                let flightStops = flight.stops.replace("Stop", "Escala");
+                flightType.innerHTML = flightStops;
+            }
+
+            airline = flight.flight_code;
+            
+            let logo = document.createElement('div');
+            logo.classList.add('img-container');
+
+            let img = document.createElement('img');
+            img.classList.add('logo-code');
+
+            if(airline.startsWith("AR")) {
+                img.src = './assets/AR.png';
+            }else if (airline.startsWith("LA")) {
+                img.src = './assets/LA.png';
+            }else if (airline.startsWith("G3")) {
+                img.src = './assets/G3.png';
+            }else if (airline.startsWith("OB")) {
+                img.src = './assets/OB.png';
+            }else{
+                img.src = './assets/FO.png';
+            }
+
+            logo.appendChild(img);
+            div.appendChild(logo);
+
+            let flightTime = flight.departureAirport.time;
+            let flightDate = new Date(flightTime);
+
+            const day = String(flightDate.getDate());
+            const month = String(flightDate.getMonth() + 1);
+            const year = flightDate.getFullYear();
+            const hours = String(flightDate.getHours());
+            const minutes = String(flightDate.getMinutes());
+
+            const fullDate = `Fecha: ${day}-${month}-${year} ${'<br>'} Hora de vuelo: ${hours}:${minutes}`;
+
+            let date = document.createElement('div');
+            div.appendChild(date);
+            date.innerHTML = fullDate;
         }
 
-        return flight.source + flight.destination + myAirlines[airline].name + dateContainer.value;
-
     }else{
-        let liArray = document.querySelectorAll('li');
-        for (let i = 0; i < liArray.length; i++) {
-            let newLi = liArray[i];
+        ul.remove();
+    
+        let ulArray = document.querySelectorAll('ul');
+        for (let i = 0; i < ulArray.length; i++) {
+            let newUl = ulArray[i];
 
             resultsDiv.innerHTML = "";
-            aTag = newLi.querySelector("a");
+            aTag = newUl.querySelector("a");
 
             if (aTag) {
-                newLi.removeChild(aTag);
+                newUl.removeChild(aTag);
             }
         }
 
@@ -315,7 +366,6 @@ mySubmit.addEventListener('click', function(event) {
         event.preventDefault();
         flightScan(sourceSelected, destinationSelected, selectedDate).then(flight => {
             compareFlights(flight);
-            console.log(flight);
         }).catch(error => {
             console.error(error);
         });  
