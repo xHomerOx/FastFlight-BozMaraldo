@@ -219,4 +219,5 @@ div{
 
 button, input, .carousel-indicators{
     margin: 0 auto;
+    width: 100%;
 }
