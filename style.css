@@ -221,14 +221,7 @@ button, input, .carousel-indicators{
     margin: 0 auto;
 }
 
-@media only screen and (min-device-width: 480px) and (max-device-width: 800px) {
-    button, input, .carousel-indicators{
-        width: 100%;
-    }
-}
- 
-/* (640x960) iPhone 4 & 4S */
-@media only screen and (min-device-width: 640px) and (max-device-width: 960px) {
+@media screen and (max-width: 768px) {
     button, input, .carousel-indicators{
         width: 100%;
     }
