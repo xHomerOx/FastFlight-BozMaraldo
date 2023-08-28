@@ -1,5 +1,6 @@
 /* --------------------------------------------- API Call ------------------------------------------- */
 
+/* Llamo a la API de Flight Radar */
 async function flightCall(url, options) {
     url = 'https://flight-radar1.p.rapidapi.com/airports/list',
     options = {
@@ -32,59 +33,86 @@ async function flightCall(url, options) {
     }
 }
 
+
+/* Llamo a la funcion asincronica y retorno los resultados */
 const myAirports = flightCall();
 
 myAirports.then(airports => {
-    let optionSource;
-    let optionDestination;
-
-    for(let i = 0; i < airports.rows.length; i++){
-        let source = airports.rows[i].name + ' - ' + airports.rows[i].country;
-        optionSource = document.createElement('option');
-        optionSource.value = airports.rows[i].iata;
-        optionSource.text = source;
-        selectSource.appendChild(optionSource);[0].iata
-    }
-
-    for(let i = 0; i < airports.rows.length; i++){
-        let destination = airports.rows[i].name + ' - ' + airports.rows[i].country;
-        optionDestination = document.createElement('option');
-        optionDestination.value = airports.rows[i].iata;
-        optionDestination.text = destination;
-        selectDestination.appendChild(optionDestination);
-    }
+    return airports;
+}).then(function(data){
+    filteredAirports(data);
 }).catch(error => {
     console.error(error);
 });   
 
-async function flightScan(url, options) {
-    url = 'https://flight-radar1.p.rapidapi.com/flights/list-most-tracked',
-    options = {
-        method: 'GET',
-        headers: {
-            'X-RapidAPI-Key': '7358e78926mshdfd3d3ac3c89ca6p13b0adjsn2d3557e441b7',
-            'X-RapidAPI-Host': 'flight-radar1.p.rapidapi.com'
-        }
-    };
-    try {
+/* Creo una funcion con los valores obtenidos y filtro */
+function filteredAirports(airports) {
 
-        const response = await fetch(url, options);
-        const result = await response.json();
-        console.log(result);
-        return result;
+    const fullAirports = airports.rows;
 
-    } catch (error) {
-        console.error(error);
+    const americanAirports = fullAirports.filter(airport => 
+        airport.country.includes("Argentina") || 
+        airport.country.includes("Bolivia") ||
+        airport.country.includes("Brazil") || 
+        airport.country.includes("Chile") || 
+        airport.country.includes("Peru") || 
+        airport.country.includes("Paraguay"));
+        console.log(americanAirports);
+
+    let optionSource;
+    let optionDestination;
+
+    americanAirports.sort((a, b) => (a.country > b.country) ? 1 : (a.country === b.country) ? ((a.name > b.name) ? 1 : -1) : -1 );
+
+    for(let i = 0; i < americanAirports.length; i++){
+        let source = americanAirports[i].name + ' - ' + americanAirports[i].country;
+        optionSource = document.createElement('option');
+        optionSource.value = americanAirports[i].iata;
+        optionSource.text = source;
+        selectSource.appendChild(optionSource);[0].iata
+    }
+
+    for(let i = 0; i < americanAirports.length; i++){
+        let destination = americanAirports[i].name + ' - ' + americanAirports[i].country;
+        optionDestination = document.createElement('option');
+        optionDestination.value = americanAirports[i].iata;
+        optionDestination.text = destination;
+        selectDestination.appendChild(optionDestination);
     }
 }
 
-const myFlights = flightScan();
 
-myFlights.then(airlines => {
-    console.log(airlines);
-}).catch(error => {
-    console.error(error);
-});  
+
+
+
+// async function flightScan(url, options) {
+//     url = 'https://flight-radar1.p.rapidapi.com/flights/list-most-tracked',
+//     options = {
+//         method: 'GET',
+//         headers: {
+//             'X-RapidAPI-Key': '7358e78926mshdfd3d3ac3c89ca6p13b0adjsn2d3557e441b7',
+//             'X-RapidAPI-Host': 'flight-radar1.p.rapidapi.com'
+//         }
+//     };
+//     try {
+
+//         const response = await fetch(url, options);
+//         const result = await response.json();
+//         console.log(result);
+//         return result;
+
+//     } catch (error) {
+//         console.error(error);
+//     }
+// }
+
+// const myFlights = flightScan();
+
+// myFlights.then(airlines => {
+//     console.log(airlines);
+// }).catch(error => {
+//     console.error(error);
+// });  
 
 
 /* --------------------------------------------- DOM Creation ------------------------------------------- */
