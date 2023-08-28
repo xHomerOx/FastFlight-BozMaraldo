@@ -293,9 +293,6 @@ function compareFlights(matchedFlights) {
 
 // }
 
-/* Events */
-
-
 /* --------------------------------------------- Events Listeners ------------------------------------------- */
 
 /* Itero para que cuando un valor aparezca en un select, no aparezca en el otro */
