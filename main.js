@@ -259,6 +259,7 @@ function userData(src, dest, airline, date) {
 
     const form = document.createElement('form');
     form.classList.add("passenger-data");
+    form.classList.add("whiteBackground");
 
     for (let i = 1; i <= passengersAmmount; i++) {
 

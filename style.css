@@ -34,7 +34,7 @@ header img{
     text-align: center;
 }
 
-.SearchControls_grid{
+.SearchControls_grid, .passenger-data{
     position: relative;
     display: flex;
     flex-wrap: wrap;
