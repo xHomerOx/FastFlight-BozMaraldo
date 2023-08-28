@@ -99,10 +99,13 @@ function filteredAirports(airports) {
 }
 
 
-/* Funcion que llama a otra API Paga para obtener los datos de la busqueda (Usar poco por motivos de limite diario) */
+/* Funcion que llama a otra API para obtener los datos de la busqueda (Usar poco por motivos de limite diario) */
 let sourceSelected, destinationSelected, selectedDate, passengersAmm;
+const loader = document.querySelector('.lds-ring');
+loader.style.display = 'none';
 
 async function flightScan(sourceSelected, destinationSelected, selectedDate) {
+    
     url = `https://flight-fare-search.p.rapidapi.com/v2/flights/?from=${sourceSelected}&to=${destinationSelected}&date=${selectedDate}&adult=${passengersAmm}`,
     options = {
         method: 'GET',
@@ -111,11 +114,12 @@ async function flightScan(sourceSelected, destinationSelected, selectedDate) {
             'X-RapidAPI-Host': 'flight-fare-search.p.rapidapi.com'
         }
     };
+
     try {
         const response = await fetch(url, options);
         const result = await response.json();
+        loader.style.display = 'none';
         return result;
-
     } catch (error) {
         console.error(error);
     }
@@ -193,6 +197,16 @@ function compareFlights(matchedFlights) {
             date.innerHTML = fullDate;
         }
 
+        /* Selecciono mi vuelo deseado */
+        let selectedOption = document.querySelectorAll('.BpkTicket_bpk-ticket');
+
+        selectedOption.forEach(selected => selected.addEventListener('click', function(event) {
+            event.preventDefault();
+            selectedOption.forEach(unselected => unselected.removeAttribute('selected', 'selected'));
+            selected.setAttribute('selected', 'selected');
+            console.log(selected);
+        }));  
+
     }else{
         ul.remove();
     
@@ -218,80 +232,80 @@ function compareFlights(matchedFlights) {
 };
 
 
-// function userData(src, dest, airline, date) {
+function userData(src, dest, airline, date) {
     
-//     const passengersWrapper = document.querySelector('.Cabin_inputWrapper input');
-//     const passengersAmmount = passengersWrapper.value;
+    const passengersWrapper = document.querySelector('.Cabin_inputWrapper input');
+    const passengersAmmount = passengersWrapper.value;
 
-//     const form = document.createElement('form');
-//     form.classList.add("passenger-data");
+    const form = document.createElement('form');
+    form.classList.add("passenger-data");
 
-//     for (let i = 1; i <= passengersAmmount; i++) {
+    for (let i = 1; i <= passengersAmmount; i++) {
 
-//         const nameLabel = document.createElement('label');
-//         nameLabel.textContent = `Nombre del pasajero ${i}: `;
-//         const nameInput = document.createElement('input');
-//         nameLabel.appendChild(nameInput);
-//         nameInput.setAttribute("type", "text");
-//         nameInput.required = true;
+        const nameLabel = document.createElement('label');
+        nameLabel.textContent = `Nombre del pasajero ${i}: `;
+        const nameInput = document.createElement('input');
+        nameLabel.appendChild(nameInput);
+        nameInput.setAttribute("type", "text");
+        nameInput.required = true;
 
-//         const idLabel = document.createElement('label');
-//         idLabel.textContent = `Documento del pasajero ${i}: `;
-//         const idInput = document.createElement('input');
-//         idLabel.appendChild(idInput);
-//         idInput.setAttribute("type", "number");
-//         idInput.required = true;
+        const idLabel = document.createElement('label');
+        idLabel.textContent = `Documento del pasajero ${i}: `;
+        const idInput = document.createElement('input');
+        idLabel.appendChild(idInput);
+        idInput.setAttribute("type", "number");
+        idInput.required = true;
 
-//         form.appendChild(nameLabel);
-//         form.appendChild(document.createElement('br'));
-//         form.appendChild(idLabel);
-//         form.appendChild(document.createElement('br'));
-//     }
+        form.appendChild(nameLabel);
+        form.appendChild(document.createElement('br'));
+        form.appendChild(idLabel);
+        form.appendChild(document.createElement('br'));
+    }
 
-//     const submitButton = document.createElement('button');
-//     submitButton.type = 'submit';
-//     submitButton.textContent = 'Enviar';
-//     form.appendChild(submitButton);
-//     submitButton.classList.add("end-reservation");
+    const submitButton = document.createElement('button');
+    submitButton.type = 'submit';
+    submitButton.textContent = 'Enviar';
+    form.appendChild(submitButton);
+    submitButton.classList.add("end-reservation");
 
-//     let removeOrigin = document.querySelector('.OriginDesktopSearchControlGroup_autoSuggestContainer');
-//     let removeDest = document.querySelector('.DestinationSearchControlsGroup_autoSuggestContainer');
-//     let removeDate = document.querySelector('.DateSearchControlsGroup_datesContaine');
-//     let removePass = document.querySelector('.CabinClassTravellerSearchControlGroup_travellerContainer');
+    let removeOrigin = document.querySelector('.OriginDesktopSearchControlGroup_autoSuggestContainer');
+    let removeDest = document.querySelector('.DestinationSearchControlsGroup_autoSuggestContainer');
+    let removeDate = document.querySelector('.DateSearchControlsGroup_datesContaine');
+    let removePass = document.querySelector('.CabinClassTravellerSearchControlGroup_travellerContainer');
 
-//     let oldSubmit = document.querySelector('.BpkButtonBase_bpk-button');
+    let oldSubmit = document.querySelector('.BpkButtonBase_bpk-button');
 
-//     removeOrigin.remove();
-//     removeDest.remove();
-//     removeDate.remove();
-//     removePass.remove();
+    removeOrigin.remove();
+    removeDest.remove();
+    removeDate.remove();
+    removePass.remove();
 
-//     oldSubmit.remove();
+    oldSubmit.remove();
 
-//     resultsDiv.remove();
+    resultsDiv.remove();
 
-//     main.insertAdjacentElement('afterend', form);
+    main.insertAdjacentElement('afterend', form);
 
-//     let disableSubmit = false;
+    let disableSubmit = false;
 
-//     submitButton.addEventListener("click", function(event) {
-//         if(document.querySelector('.passenger-data').checkValidity()){
-//             event.preventDefault();
+    submitButton.addEventListener("click", function(event) {
+        if(document.querySelector('.passenger-data').checkValidity()){
+            event.preventDefault();
 
-//             if (disableSubmit) {
-//                 event.preventDefault();
-//                 return;
-//             }
+            if (disableSubmit) {
+                event.preventDefault();
+                return;
+            }
 
-//             const user = document.createElement('div');
-//             user.innerHTML = `${'<strong>'}Reserva confirmada: ${'</strong>'} ${'<br>'}Origen: ${src}${'<br>'}Destino: ${dest}${'<br>'}Empresa: ${airline}${'<br>'}Fecha: ${date}${'<br>'}Pasajeros: ${passengersAmmount}${'<br>'}Que tenga un excelente vuelo.`;
+            const user = document.createElement('div');
+            user.innerHTML = `${'<strong>'}Reserva confirmada: ${'</strong>'} ${'<br>'}Origen: ${src}${'<br>'}Destino: ${dest}${'<br>'}Empresa: ${airline}${'<br>'}Fecha: ${date}${'<br>'}Pasajeros: ${passengersAmmount}${'<br>'}Que tenga un excelente vuelo.`;
 
-//             form.appendChild(user);
-//             disableSubmit = true;
-//         }
-//     });
+            form.appendChild(user);
+            disableSubmit = true;
+        }
+    });
 
-// }
+}
 
 /* --------------------------------------------- Events Listeners ------------------------------------------- */
 
@@ -361,6 +375,21 @@ let mySubmit = document.querySelector(".BpkButtonBase_bpk-button");
 mySubmit.addEventListener('click', function(event) {
     if(document.querySelector('#search-form').checkValidity()){
         event.preventDefault();
+        ul.remove();
+    
+        let ulArray = document.querySelectorAll('ul');
+        for (let i = 0; i < ulArray.length; i++) {
+            let newUl = ulArray[i];
+
+            resultsDiv.innerHTML = "";
+            aTag = newUl.querySelector("a");
+
+            if (aTag) {
+                newUl.removeChild(aTag);
+            }
+        }
+        
+        loader.style.display = 'block'; 
         flightScan(sourceSelected, destinationSelected, selectedDate).then(flight => {
             compareFlights(flight);
         }).catch(error => {
@@ -368,26 +397,4 @@ mySubmit.addEventListener('click', function(event) {
         });  
         
     }
-});
-
-
-// let mySrc;
-// let myDest;
-// let sourceFound;
-// let destinationFound;
-// let flightsFound = new Array();
-// let flightsSet = new Array();
-
-// for (let i = 0; i < myFlights.length; i++) {
-//     let flight = myFlights[i];
-//     mySrc = flight.source;
-//     myDest = flight.destination;
-
-//     selectedFlights("source " + i, mySrc);
-//     selectedFlights("destination " + i, myDest);
-
-//     sourceFound = JSON.parse(localStorage.getItem("source " + i));
-//     destinationFound = JSON.parse(localStorage.getItem("destination " + i));
-
-//     flightsFound.push({'source': sourceFound, 'destination': destinationFound});
-// }
+}); 
