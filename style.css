@@ -207,3 +207,16 @@ footer{
     left: 80px;
     transform: rotate(45deg);
 }
+
+div, select{
+    width: 100%;
+}
+
+div{
+    width: 100%;
+    text-align: center;
+}
+
+button, input, .carousel-indicators{
+    margin: 0 auto;
+}
