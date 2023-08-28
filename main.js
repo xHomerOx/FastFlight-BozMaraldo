@@ -205,18 +205,6 @@ function compareFlights(matchedFlights) {
     }
 };
 
-let mySubmit = document.querySelector(".BpkButtonBase_bpk-button");
-mySubmit.addEventListener('click', function(event) {
-    if(document.querySelector('#search-form').checkValidity()){
-        event.preventDefault();
-        flightScan(sourceSelected, destinationSelected, selectedDate).then(flight => {
-            console.log(flight);
-        }).catch(error => {
-            console.error(error);
-        });  
-        
-    }
-});
 
 // function userData(src, dest, airline, date) {
     
@@ -296,6 +284,8 @@ mySubmit.addEventListener('click', function(event) {
 /* Events */
 
 
+/* --------------------------------------------- Events Listeners ------------------------------------------- */
+
 let cabinNumber = document.querySelector('.Cabin_inputWrapper input');
 
 cabinNumber.addEventListener('blur', function numberLimit(event) {
@@ -311,9 +301,6 @@ cabinNumber.addEventListener('blur', function numberLimit(event) {
     passengersAmm = cabinNumber.value;
 });
 
-
-/* Rest of Code */
-
 const dateContainer = document.querySelector('.Date_inputWrapper input');
 const datepicker = new Datepicker(dateContainer, {
     format: 'dd-mm-yyyy',
@@ -324,6 +311,20 @@ let date = dateContainer.addEventListener('changeDate', function() {
     selectedDate = datepicker.getDate('yyyy-mm-dd');
     return selectedDate;
 });
+
+let mySubmit = document.querySelector(".BpkButtonBase_bpk-button");
+mySubmit.addEventListener('click', function(event) {
+    if(document.querySelector('#search-form').checkValidity()){
+        event.preventDefault();
+        flightScan(sourceSelected, destinationSelected, selectedDate).then(flight => {
+            console.log(flight);
+        }).catch(error => {
+            console.error(error);
+        });  
+        
+    }
+});
+
 
 // let mySrc;
 // let myDest;
