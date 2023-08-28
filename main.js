@@ -124,45 +124,6 @@ async function flightScan(sourceSelected, destinationSelected, selectedDate) {
     }
 }
 
-/* Itero para que cuando un valor aparezca en un select, no aparezca en el otro */
-let selectSource = document.querySelector('#originInput-input');
-let selectDestination = document.querySelector('#destinationInput-input');
-
-let optionCheck1;
-selectSource.addEventListener('change', function(event){
-    optionCheck1 = event.target.value;
-    let sourceIndex = selectSource.selectedIndex;
-    for (let i = 0; i < selectDestination.options.length; i++) {
-        if(selectDestination.options[i].value === optionCheck1) {
-            selectSource.options[i].setAttribute('selected', 'selected');
-            selectDestination.options[i].style.display = "none";
-        }else{
-            selectSource.options[i].removeAttribute('selected', 'selected');
-            selectDestination.options[i].style.display = "block";
-        }
-    }
-    sourceSelected = selectDestination.options[sourceIndex].value;
-});
-
-let optionCheck2;
-selectDestination.addEventListener('change', function(event){
-    optionCheck2 = event.target.value;
-    let destinationIndex = selectDestination.selectedIndex;
-    for (let i = 0; i < selectSource.options.length; i++) {
-        if(selectSource.options[i].value === optionCheck2) {
-            selectDestination.options[i].setAttribute('selected', 'selected');
-            selectSource.options[i].style.display = "none";
-        }else{
-            selectDestination.options[i].removeAttribute('selected', 'selected');
-            selectSource.options[i].style.display = "block";
-        }
-    }
-    destinationSelected = selectDestination.options[destinationIndex].value;
-});
-
-
-
-
 /* --------------------------------------------- Functions ------------------------------------------- */
 
 /* Busco los vuelos */
@@ -285,6 +246,42 @@ function compareFlights(matchedFlights) {
 
 
 /* --------------------------------------------- Events Listeners ------------------------------------------- */
+
+/* Itero para que cuando un valor aparezca en un select, no aparezca en el otro */
+let selectSource = document.querySelector('#originInput-input');
+let selectDestination = document.querySelector('#destinationInput-input');
+
+let optionCheck1;
+selectSource.addEventListener('change', function(event){
+    optionCheck1 = event.target.value;
+    let sourceIndex = selectSource.selectedIndex;
+    for (let i = 0; i < selectDestination.options.length; i++) {
+        if(selectDestination.options[i].value === optionCheck1) {
+            selectSource.options[i].setAttribute('selected', 'selected');
+            selectDestination.options[i].style.display = "none";
+        }else{
+            selectSource.options[i].removeAttribute('selected', 'selected');
+            selectDestination.options[i].style.display = "block";
+        }
+    }
+    sourceSelected = selectDestination.options[sourceIndex].value;
+});
+
+let optionCheck2;
+selectDestination.addEventListener('change', function(event){
+    optionCheck2 = event.target.value;
+    let destinationIndex = selectDestination.selectedIndex;
+    for (let i = 0; i < selectSource.options.length; i++) {
+        if(selectSource.options[i].value === optionCheck2) {
+            selectDestination.options[i].setAttribute('selected', 'selected');
+            selectSource.options[i].style.display = "none";
+        }else{
+            selectDestination.options[i].removeAttribute('selected', 'selected');
+            selectSource.options[i].style.display = "block";
+        }
+    }
+    destinationSelected = selectDestination.options[destinationIndex].value;
+});
 
 let cabinNumber = document.querySelector('.Cabin_inputWrapper input');
 
