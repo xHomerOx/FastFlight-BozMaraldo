@@ -225,4 +225,7 @@ button, input, .carousel-indicators{
     button, input, .carousel-indicators{
         width: 100%;
     }
+    .BpkButtonBase_bpk-button, .end-reservation{
+        width: 100%;
+    }
 }
