@@ -1,3 +1,22 @@
+/* --------------------------------------------- DOM Creation ------------------------------------------- */
+
+let main = document.getElementsByClassName('SearchControls_grid')[0];
+
+let resultsDiv = document.createElement('div');
+resultsDiv.classList.add('results-found');
+resultsDiv.style.display = "block";
+resultsDiv.style.textAlign = "center";
+
+main.insertAdjacentElement('afterend', resultsDiv);
+
+let ul = document.createElement('ul');
+resultsDiv.appendChild(ul);
+
+let li = document.createElement('li');
+ul.appendChild(li);
+
+let aTag;
+
 /* --------------------------------------------- API Call ------------------------------------------- */
 
 /* Llamo a la API de Flight Radar */
@@ -81,21 +100,22 @@ function filteredAirports(airports) {
     }
 }
 
-let sourceSelected, destinationSelected, selectedDate;
+
+/* Funcion que llama a otra API Paga para obtener los datos de la busqueda */
+let sourceSelected, destinationSelected, selectedDate, passengersAmm;
 
 async function flightScan(sourceSelected, destinationSelected, selectedDate) {
-    url = `https://timetable-lookup.p.rapidapi.com/TimeTable/${sourceSelected}/${destinationSelected}/${selectedDate}/`,
+    url = `https://flight-fare-search.p.rapidapi.com/v2/flights/?from=${sourceSelected}&to=${destinationSelected}&date=${selectedDate}&adult=${passengersAmm}`,
     options = {
         method: 'GET',
         headers: {
             'X-RapidAPI-Key': '7358e78926mshdfd3d3ac3c89ca6p13b0adjsn2d3557e441b7',
-            'X-RapidAPI-Host': 'timetable-lookup.p.rapidapi.com'
+            'X-RapidAPI-Host': 'flight-fare-search.p.rapidapi.com'
         }
     };
     try {
-
         const response = await fetch(url, options);
-        const result = await response.text();
+        const result = await response.json();
         console.log(result);
         return result;
 
@@ -103,13 +123,6 @@ async function flightScan(sourceSelected, destinationSelected, selectedDate) {
         console.error(error);
     }
 }
-
-flightScan(sourceSelected, destinationSelected, selectedDate).then(flight => {
-    console.log(flight);
-}).catch(error => {
-    console.error(error);
-});  
-
 
 /* Itero para que cuando un valor aparezca en un select, no aparezca en el otro */
 let selectSource = document.querySelector('#originInput-input');
@@ -148,24 +161,7 @@ selectDestination.addEventListener('change', function(event){
 });
 
 
-/* --------------------------------------------- DOM Creation ------------------------------------------- */
 
-let main = document.getElementsByClassName('SearchControls_grid')[0];
-
-let resultsDiv = document.createElement('div');
-resultsDiv.classList.add('results-found');
-resultsDiv.style.display = "block";
-resultsDiv.style.textAlign = "center";
-
-main.insertAdjacentElement('afterend', resultsDiv);
-
-let ul = document.createElement('ul');
-resultsDiv.appendChild(ul);
-
-let li = document.createElement('li');
-ul.appendChild(li);
-
-let aTag;
 
 /* --------------------------------------------- Functions ------------------------------------------- */
 
@@ -213,7 +209,12 @@ let mySubmit = document.querySelector(".BpkButtonBase_bpk-button");
 mySubmit.addEventListener('click', function(event) {
     if(document.querySelector('#search-form').checkValidity()){
         event.preventDefault();
-        return flightScan(sourceSelected, destinationSelected, selectedDate);
+        flightScan(sourceSelected, destinationSelected, selectedDate).then(flight => {
+            console.log(flight);
+        }).catch(error => {
+            console.error(error);
+        });  
+        
     }
 });
 
@@ -306,6 +307,8 @@ cabinNumber.addEventListener('blur', function numberLimit(event) {
         cabinNumber.value = 20;
     }
     cabinNumber.text = cabinNumber.value;
+    
+    passengersAmm = cabinNumber.value;
 });
 
 
@@ -318,7 +321,7 @@ const datepicker = new Datepicker(dateContainer, {
 }); 
 
 let date = dateContainer.addEventListener('changeDate', function() {
-    selectedDate = datepicker.getDate('yyyymmdd');
+    selectedDate = datepicker.getDate('yyyy-mm-dd');
     return selectedDate;
 });
 
