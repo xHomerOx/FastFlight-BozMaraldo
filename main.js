@@ -68,6 +68,7 @@ let optionSource;
 let optionDestination;
 let latSrc, lonSrc, latDest, lonDest;
 
+/* Tambien ordeno con sintaxis ternaria por pais y aeropuerto */
 function filteredAirports(airports) {
 
     const fullAirports = airports.rows;
