@@ -509,3 +509,14 @@ const myMap = (myLat, myLon) => {
 
     marker = L.marker([myLat, myLon]).addTo(map);
 };
+
+/* Recarga de pagina */
+let image = document.querySelector(".logo");
+image.addEventListener('click', function(event) {
+    event.preventDefault();
+    reloadPage();
+});
+
+function reloadPage() {
+    location.reload();
+}
