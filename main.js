@@ -261,7 +261,9 @@ function compareFlights(matchedFlights) {
     }
 };
 
+/* --------------------------------------------- Local Storages ------------------------------------------- */
 
+/* Datos de usuarios */
 function userData(src, dest, airline, date) {
 
     const passengersWrapper = document.querySelector('.Cabin_inputWrapper input');
@@ -348,7 +350,7 @@ function userData(src, dest, airline, date) {
 
             const user = document.createElement('div');
             user.innerHTML = `${'<strong>'}Reserva confirmada: ${'</strong>'} ${'<br>'}Origen: ${src}${'<br>'}Destino: ${dest}${'<br>'}Empresa: ${airline}${'<br>'}Fecha: ${date}${'<br>'}Pasajeros: ${passengersAmmount}${'<br>'}Nombre/s: ${passengersNames}${'<br>'}ID/s: ${passengersIds}${'<br>'}Que tenga un excelente vuelo.`;
-            
+
             form.appendChild(user);
             disableSubmit = true;
         }
