@@ -66,6 +66,7 @@ myAirports.then(airports => {
 /* Creo una funcion con los valores obtenidos y filtro por algunos paises sudamericanos*/
 let optionSource;
 let optionDestination;
+let latSrc, lonSrc, latDest, lonDest;
 
 function filteredAirports(airports) {
 
@@ -88,7 +89,9 @@ function filteredAirports(airports) {
         optionSource = document.createElement('option');
         optionSource.value = americanAirports[i].iata;
         optionSource.text = source;
-        selectSource.appendChild(optionSource);[0].iata
+        selectSource.appendChild(optionSource);
+        latSrc = optionSource.setAttribute('data-lat', americanAirports[i].lat);
+        lonSrc = optionSource.setAttribute('data-lon', americanAirports[i].lon);
     }
 
     for(let i = 0; i < americanAirports.length; i++){
@@ -97,11 +100,13 @@ function filteredAirports(airports) {
         optionDestination.value = americanAirports[i].iata;
         optionDestination.text = destination;
         selectDestination.appendChild(optionDestination);
+        latDest = optionDestination.setAttribute('data-lat', americanAirports[i].lat);
+        lonDest = optionDestination.setAttribute('data-lon', americanAirports[i].lon);
     }
 }
 
 
-/* Funcion que llama a otra API para obtener los datos de la busqueda (Usar poco por motivos de limite diario) */
+/* Funcion que llama a un Endpoint de otra API para obtener los datos de la busqueda (Usar poco por motivos de limite diario) */
 let sourceSelected, destinationSelected, selectedDate, passengersAmm;
 const loader = document.querySelector('.lds-ring');
 loader.style.display = 'none';
@@ -304,12 +309,12 @@ function userData(src, dest, airline, date) {
 
         nameInput.addEventListener('input', function() {
             localStorage.setItem("Pasajero " + i,  nameInput.value);
-            passengersNames[i - 1] = localStorage.getItem("Documento " + i);
+            passengersNames[i - 1] = localStorage.getItem("Pasajero " + i);
         });
     
         idInput.addEventListener('input', function() {
             localStorage.setItem("Documento " + i,  idInput.value);
-            passengersIds[i - 1] = localStorage.getItem("Pasajero " + i);
+            passengersIds[i - 1] = localStorage.getItem("Documento " + i);
         });
     }
 
@@ -377,6 +382,8 @@ selectSource.addEventListener('change', function(event){
         if(selectDestination.options[i].value === optionCheck1) {
             selectSource.options[i].setAttribute('selected', 'selected');
             selectDestination.options[i].style.display = "none";
+            selectSource.options[i].getAttribute('data-lat');
+            selectSource.options[i].getAttribute('data-lon');
         }else{
             selectSource.options[i].removeAttribute('selected', 'selected');
             selectDestination.options[i].style.display = "block";
@@ -386,6 +393,7 @@ selectSource.addEventListener('change', function(event){
 });
 
 let optionCheck2;
+let myLat, myLon;
 selectDestination.addEventListener('change', function(event){
     optionCheck2 = event.target.value;
     let destinationIndex = selectDestination.selectedIndex;
@@ -393,6 +401,9 @@ selectDestination.addEventListener('change', function(event){
         if(selectSource.options[i].value === optionCheck2) {
             selectDestination.options[i].setAttribute('selected', 'selected');
             selectSource.options[i].style.display = "none";
+            myLat = selectSource.options[i].getAttribute('data-lat');
+            myLon = selectSource.options[i].getAttribute('data-lon');
+            console.log(myLat, myLon);
         }else{
             selectDestination.options[i].removeAttribute('selected', 'selected');
             selectSource.options[i].style.display = "block";
@@ -445,6 +456,8 @@ mySubmit.addEventListener('click', function(event) {
             }
         }
 
+        myMap(myLat, myLon);
+
         loader.style.display = 'block'; 
         flightScan(sourceSelected, destinationSelected, selectedDate).then(flight => {
             compareFlights(flight);
@@ -457,14 +470,23 @@ mySubmit.addEventListener('click', function(event) {
 
 /* --------------------------------------------- Leaflet Library ------------------------------------------- */
 
-let map = L.map('map').setView([-38.724899, -62.1693], 13);
+/* Creo un arrow para llamar al mapa */
 
-L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 19,
-    attribution: '© OpenStreetMap'
-}).addTo(map);
+let map, marker;
+const myMap = (myLat, myLon) => {
 
-map.invalidateSize();
+    if (map) {
+        map.remove();
+    }
 
-let marker = L.marker([-38.724899, -62.1693]).addTo(map);
+    map = L.map('map').setView([myLat, myLon], 13);
 
+    L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '© OpenStreetMap'
+    }).addTo(map);
+
+    map.invalidateSize();
+
+    marker = L.marker([myLat, myLon]).addTo(map);
+};
