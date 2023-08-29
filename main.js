@@ -30,7 +30,6 @@ async function flightCall(url, options) {
         }
     };
     try {
-
         let airSpinner = document.querySelector(".loader");
         let mainContent = document.querySelector(".mainContent");
         let searchControl = document.querySelector(".SearchControls_grid");
