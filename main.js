@@ -44,6 +44,7 @@ async function flightCall(url, options) {
         searchControl.classList.add("whiteBackground");
         airSpinner.style.display = 'none';
         mainContent.style.display = 'block';
+
         return result;
     } catch (error) {
         console.error(error);
@@ -79,6 +80,8 @@ function filteredAirports(airports) {
         airport.country.includes("Paraguay"));
 
     americanAirports.sort((a, b) => (a.country > b.country) ? 1 : (a.country === b.country) ? ((a.name > b.name) ? 1 : -1) : -1 );
+
+    console.log(americanAirports);
 
     for(let i = 0; i < americanAirports.length; i++){
         let source = americanAirports[i].name + ' - ' + americanAirports[i].country;
@@ -451,3 +454,17 @@ mySubmit.addEventListener('click', function(event) {
         
     }
 }); 
+
+/* --------------------------------------------- Leaflet Library ------------------------------------------- */
+
+let map = L.map('map').setView([-38.724899, -62.1693], 13);
+
+L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '© OpenStreetMap'
+}).addTo(map);
+
+map.invalidateSize();
+
+let marker = L.marker([-38.724899, -62.1693]).addTo(map);
+
