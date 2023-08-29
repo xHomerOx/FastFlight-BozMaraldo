@@ -207,7 +207,7 @@ function compareFlights(matchedFlights) {
             div.appendChild(logo);
 
             let flightTime = flight.departureAirport.time;
-            flightDate = new Date(flightTime);
+            flightDate = new Date(flightTimqe);
 
             const day = String(flightDate.getDate());
             const month = String(flightDate.getMonth() + 1);
