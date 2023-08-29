@@ -301,15 +301,13 @@ function userData(src, dest, airline, date) {
 
         nameInput.addEventListener('input', function() {
             localStorage.setItem("Pasajero " + i,  nameInput.value);
+            passengersNames[i - 1] = localStorage.getItem("Documento " + i);
         });
     
         idInput.addEventListener('input', function() {
             localStorage.setItem("Documento " + i,  idInput.value);
+            passengersIds[i - 1] = localStorage.getItem("Pasajero " + i);
         });
-
-        passengersNames[i - 1] = localStorage.getItem("Pasajero " + i);
-        passengersIds[i - 1] = localStorage.getItem("Documento " + i);
-
     }
 
     const submitButton = document.createElement('button');
