@@ -304,14 +304,18 @@ function userData(src, dest, airline, date) {
 
         form.appendChild(newDiv);
 
+        addInputs(nameInput, idInput, i);
+    }
+
+    function addInputs(nameInput, idInput, index) {
         nameInput.addEventListener('input', function() {
-            localStorage.setItem("Pasajero " + i,  nameInput.value);
-            passengersNames[i - 1] = localStorage.getItem("Pasajero " + i);
+            localStorage.setItem("Pasajero " + index,  nameInput.value);
+            passengersNames[index - 1] = localStorage.getItem("Pasajero " + index);
         });
     
         idInput.addEventListener('input', function() {
-            localStorage.setItem("Documento " + i,  idInput.value);
-            passengersIds[i - 1] = localStorage.getItem("Documento " + i);
+            localStorage.setItem("Documento " + index,  idInput.value);
+            passengersIds[index - 1] = localStorage.getItem("Documento " + index);
         });
     }
 
@@ -359,10 +363,6 @@ function userData(src, dest, airline, date) {
             form.appendChild(user);
             disableSubmit = true;
 
-            nameInput.remove();
-            nameLabel.remove();
-            idInput.remove();
-            idLabel.remove();
             submitButton.remove();
 
             printButton = document.createElement('button');
