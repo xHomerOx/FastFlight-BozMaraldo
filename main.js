@@ -278,10 +278,11 @@ function userData(src, dest, airline, date) {
 
     let passengersNames = [];
     let passengersIds = [];
+    let newDiv;
     let nameLabel, nameInput, idLabel, idInput;
     for (let i = 1; i <= passengersAmmount; i++) {
 
-        const newDiv = document.createElement('div');
+        newDiv = document.createElement('div');
 
         nameLabel = document.createElement('label');
         nameLabel.textContent = `Nombre del pasajero ${i}: `;
@@ -301,6 +302,7 @@ function userData(src, dest, airline, date) {
 
         newDiv.appendChild(nameLabel);
         newDiv.appendChild(idLabel);
+        newDiv.classList.add('user-fields');
 
         form.appendChild(newDiv);
 
@@ -364,6 +366,11 @@ function userData(src, dest, airline, date) {
             disableSubmit = true;
 
             submitButton.remove();
+
+            let userFields = document.querySelectorAll('.user-fields');
+            userFields.forEach(userField => {
+                userField.remove();
+            });
 
             printButton = document.createElement('button');
             printButton.type = 'submit';
