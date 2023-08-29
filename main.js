@@ -152,9 +152,9 @@ function compareFlights(matchedFlights) {
         const boliviana = new Airline("OB", "Boliviana de Aviación");
         const flybondi = new Airline("FO", "Flybondi");
 
-        for (flight of flightResults) {
+        let departureAirport, arrivalAirport, airlineCode, flightDateEST;
 
-            console.log(flight);
+        for (flight of flightResults) {
 
             let div = document.createElement('div');
             ul.appendChild(div);   
@@ -214,6 +214,16 @@ function compareFlights(matchedFlights) {
             let date = document.createElement('div');
             div.appendChild(date);
             date.innerHTML = fullDate;
+
+            localStorage.setItem("Departure: ", flight.departureAirport.city);
+            localStorage.setItem("Arrival: ", flight.arrivalAirport.city);
+            localStorage.setItem("Airline: ", airline);
+            localStorage.setItem("Date and Time: ", flightDate);
+
+            departureAirport = localStorage.getItem("Departure: ");
+            arrivalAirport = localStorage.getItem("Arrival: ");
+            airlineCode = localStorage.getItem("Airline: ");
+            flightDateEST = localStorage.getItem("Date and Time: ");
         }
 
         /* Selecciono mi vuelo deseado */
@@ -223,8 +233,8 @@ function compareFlights(matchedFlights) {
             event.preventDefault();
             selectedOption.forEach(unselected => unselected.removeAttribute('selected', 'selected'));
             selected.setAttribute('selected', 'selected');
-            
-            userData(flight.departureAirport.city, flight.arrivalAirport.city, airline, flightDate);
+
+            userData(departureAirport, arrivalAirport, airlineCode, flightDateEST);
         }));  
 
     }else{
@@ -261,12 +271,17 @@ function userData(src, dest, airline, date) {
     form.classList.add("passenger-data");
     form.classList.add("whiteBackground");
 
+    let passengersNames = [];
+    let passengersIds = [];
     for (let i = 1; i <= passengersAmmount; i++) {
+
+        const newDiv = document.createElement('div');
 
         const nameLabel = document.createElement('label');
         nameLabel.textContent = `Nombre del pasajero ${i}: `;
         const nameInput = document.createElement('input');
         nameLabel.appendChild(nameInput);
+        nameInput.setAttribute("id", "name" + i);
         nameInput.setAttribute("type", "text");
         nameInput.required = true;
 
@@ -275,12 +290,25 @@ function userData(src, dest, airline, date) {
         const idInput = document.createElement('input');
         idLabel.appendChild(idInput);
         idInput.setAttribute("type", "number");
+        idInput.setAttribute("id", "id" + i);
         idInput.required = true;
 
-        form.appendChild(nameLabel);
-        form.appendChild(document.createElement('br'));
-        form.appendChild(idLabel);
-        form.appendChild(document.createElement('br'));
+        newDiv.appendChild(nameLabel);
+        newDiv.appendChild(idLabel);
+
+        form.appendChild(newDiv);
+
+        nameInput.addEventListener('input', function() {
+            localStorage.setItem("Pasajero " + i,  nameInput.value);
+        });
+    
+        idInput.addEventListener('input', function() {
+            localStorage.setItem("Documento " + i,  idInput.value);
+        });
+
+        passengersNames[i - 1] = localStorage.getItem("Pasajero " + i);
+        passengersIds[i - 1] = localStorage.getItem("Documento " + i);
+
     }
 
     const submitButton = document.createElement('button');
@@ -319,11 +347,13 @@ function userData(src, dest, airline, date) {
             }
 
             const user = document.createElement('div');
-            user.innerHTML = `${'<strong>'}Reserva confirmada: ${'</strong>'} ${'<br>'}Origen: ${src}${'<br>'}Destino: ${dest}${'<br>'}Empresa: ${airline}${'<br>'}Fecha: ${date}${'<br>'}Pasajeros: ${passengersAmmount}${'<br>'}Que tenga un excelente vuelo.`;
-
+            user.innerHTML = `${'<strong>'}Reserva confirmada: ${'</strong>'} ${'<br>'}Origen: ${src}${'<br>'}Destino: ${dest}${'<br>'}Empresa: ${airline}${'<br>'}Fecha: ${date}${'<br>'}Pasajeros: ${passengersAmmount}${'<br>'}Nombre/s: ${passengersNames}${'<br>'}ID/s: ${passengersIds}${'<br>'}Que tenga un excelente vuelo.`;
+            
             form.appendChild(user);
             disableSubmit = true;
         }
+
+        localStorage.clear();
     });
 
     let oldMain = document.querySelector('.SearchControls_grid');
