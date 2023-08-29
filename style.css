@@ -301,3 +301,23 @@ button, input, .carousel-indicators{
     position: relative;
     margin: 40px auto;
 }
+
+#flight-coupon{
+    border-style: solid;
+    border-radius: 15px;
+    border-width: 1px;
+}
+
+.print-button{
+    display: flex;
+    width: -moz-fit-content;
+    width: fit-content;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0.75rem;
+    height: 4rem;
+    padding: 0 2rem;
+    background: #05203c;
+    color: #fff;
+    margin: 0 auto;
+}

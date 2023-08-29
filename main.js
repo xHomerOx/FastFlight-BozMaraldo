@@ -342,6 +342,7 @@ function userData(src, dest, airline, date) {
 
     let disableSubmit = false;
 
+    let printButton;
     submitButton.addEventListener("click", function(event) {
         if(document.querySelector('.passenger-data').checkValidity()){
             event.preventDefault();
@@ -354,9 +355,23 @@ function userData(src, dest, airline, date) {
             const user = document.createElement('div');
             user.innerHTML = `${'<strong>'}Reserva confirmada: ${'</strong>'} ${'<br>'}Origen: ${src}${'<br>'}Destino: ${dest}${'<br>'}Empresa: ${airline}${'<br>'}Fecha: ${date}${'<br>'}Pasajeros: ${passengersAmmount}${'<br>'}Nombre/s: ${passengersNames}${'<br>'}ID/s: ${passengersIds}${'<br>'}Que tenga un excelente vuelo.`;
 
+            user.setAttribute("id", "flight-coupon");
+
             form.appendChild(user);
             disableSubmit = true;
+
+            printButton = document.createElement('button');
+            printButton.type = 'submit';
+            printButton.classList.add('print-button');
+            printButton.textContent = 'Imprimir';
+
+            form.appendChild(printButton);
         }
+
+        printButton.addEventListener("click", function(event) {
+            event.preventDefault();
+            
+        });
 
         localStorage.clear();
     });
