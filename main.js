@@ -158,7 +158,7 @@ function compareFlights(matchedFlights) {
         const boliviana = new Airline("OB", "Boliviana de Aviación");
         const flybondi = new Airline("FO", "Flybondi");
 
-        let departureAirport, arrivalAirport, airlineCode, flightDateEST;
+        let departureAirport, arrivalAirport, airlineName, flightDateEST;
 
         for (flight of flightResults) {
 
@@ -186,22 +186,19 @@ function compareFlights(matchedFlights) {
             let img = document.createElement('img');
             img.classList.add('logo-code');
 
-            if(airline.startsWith("AR")) {
-                img.src = './assets/AR.png';
-                airline = aerolineas.name;
-            }else if (airline.startsWith("LA")) {
-                img.src = './assets/LA.png';
-                airline = latam.name;
-            }else if (airline.startsWith("G3")) {
-                img.src = './assets/G3.png';
-                airline = gol.name;
-            }else if (airline.startsWith("OB")) {
-                img.src = './assets/OB.png';
-                airline = boliviana.name;
-            }else{
-                img.src = './assets/FO.png';
-                airline = flybondi.name;
-            }
+            let myAirlines = {
+                AR: { src: './assets/AR.png', name: aerolineas.name },
+                LA: { src: './assets/LA.png', name: latam.name },
+                G3: { src: './assets/G3.png', name: gol.name },
+                OB: { src: './assets/OB.png', name: boliviana.name },
+                default: { src: './assets/FO.png', name: flybondi.name }
+            };
+
+            let airlineCode = airline.substring(0, 2);
+            
+            let airlineInfo = myAirlines[airlineCode] || myAirlines.default;
+            img.src = airlineInfo.src;
+            airlineName = airlineInfo.name;         
 
             logo.appendChild(img);
             div.appendChild(logo);
@@ -240,7 +237,7 @@ function compareFlights(matchedFlights) {
             selectedOption.forEach(unselected => unselected.removeAttribute('selected', 'selected'));
             selected.setAttribute('selected', 'selected');
 
-            userData(departureAirport, arrivalAirport, airlineCode, flightDateEST);
+            userData(departureAirport, arrivalAirport, airlineName, flightDateEST);
         }));  
 
     }else{
