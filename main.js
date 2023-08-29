@@ -47,7 +47,7 @@ async function flightCall(url, options) {
 
         return result;
     } catch (error) {
-        console.error(error);
+        main.innerHTML = "Ha habido un error " + error.message;
     }
 }
 
@@ -60,7 +60,7 @@ myAirports.then(airports => {
 }).then(function(data){
     filteredAirports(data);
 }).catch(error => {
-    console.error(error);
+    main.innerHTML = "Ha habido un error " + error.message;
 });   
 
 /* Creo una funcion con los valores obtenidos y filtro por algunos paises sudamericanos*/
@@ -81,8 +81,6 @@ function filteredAirports(airports) {
         airport.country.includes("Paraguay"));
 
     americanAirports.sort((a, b) => (a.country > b.country) ? 1 : (a.country === b.country) ? ((a.name > b.name) ? 1 : -1) : -1 );
-
-    console.log(americanAirports);
 
     for(let i = 0; i < americanAirports.length; i++){
         let source = americanAirports[i].name + ' - ' + americanAirports[i].country;
@@ -128,7 +126,7 @@ async function flightScan(sourceSelected, destinationSelected, selectedDate) {
         loader.style.display = 'none';
         return result;
     } catch (error) {
-        console.error(error);
+        main.innerHTML = "Ha habido un error " + error.message;
     }
 }
 
@@ -403,7 +401,6 @@ selectDestination.addEventListener('change', function(event){
             selectSource.options[i].style.display = "none";
             myLat = selectSource.options[i].getAttribute('data-lat');
             myLon = selectSource.options[i].getAttribute('data-lon');
-            console.log(myLat, myLon);
         }else{
             selectDestination.options[i].removeAttribute('selected', 'selected');
             selectSource.options[i].style.display = "block";
@@ -462,7 +459,7 @@ mySubmit.addEventListener('click', function(event) {
         flightScan(sourceSelected, destinationSelected, selectedDate).then(flight => {
             compareFlights(flight);
         }).catch(error => {
-            console.error(error);
+            main.innerHTML = "Ha habido un error " + error.message;
         });  
         
     }
@@ -471,7 +468,6 @@ mySubmit.addEventListener('click', function(event) {
 /* --------------------------------------------- Leaflet Library ------------------------------------------- */
 
 /* Creo un arrow para llamar al mapa */
-
 let map, marker;
 const myMap = (myLat, myLon) => {
 
