@@ -280,21 +280,22 @@ function userData(src, dest, airline, date) {
 
     let passengersNames = [];
     let passengersIds = [];
+    let nameLabel, nameInput, idLabel, idInput;
     for (let i = 1; i <= passengersAmmount; i++) {
 
         const newDiv = document.createElement('div');
 
-        const nameLabel = document.createElement('label');
+        nameLabel = document.createElement('label');
         nameLabel.textContent = `Nombre del pasajero ${i}: `;
-        const nameInput = document.createElement('input');
+        nameInput = document.createElement('input');
         nameLabel.appendChild(nameInput);
         nameInput.setAttribute("id", "name" + i);
         nameInput.setAttribute("type", "text");
         nameInput.required = true;
 
-        const idLabel = document.createElement('label');
+        idLabel = document.createElement('label');
         idLabel.textContent = `Documento del pasajero ${i}: `;
-        const idInput = document.createElement('input');
+        idInput = document.createElement('input');
         idLabel.appendChild(idInput);
         idInput.setAttribute("type", "number");
         idInput.setAttribute("id", "id" + i);
@@ -360,6 +361,12 @@ function userData(src, dest, airline, date) {
             form.appendChild(user);
             disableSubmit = true;
 
+            nameInput.remove();
+            nameLabel.remove();
+            idInput.remove();
+            idLabel.remove();
+            submitButton.remove();
+
             printButton = document.createElement('button');
             printButton.type = 'submit';
             printButton.classList.add('print-button');
@@ -370,7 +377,7 @@ function userData(src, dest, airline, date) {
 
         printButton.addEventListener("click", function(event) {
             event.preventDefault();
-            
+            window.print();
         });
 
         localStorage.clear();
