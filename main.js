@@ -133,7 +133,7 @@ async function flightScan(sourceSelected, destinationSelected, selectedDate) {
 
 /* --------------------------------------------- Functions ------------------------------------------- */
 
-/* Busco los vuelos (uso destructuring en el object) */
+/* Busco los vuelos */
 function compareFlights(matchedFlights) {
 
     let flightResults = matchedFlights.results;
@@ -196,13 +196,12 @@ function compareFlights(matchedFlights) {
 
             let airlineCode = airline.substring(0, 2);
             
-            let { src: airSrc, name: airName } = myAirlines[airlineCode] || myAirlines.default;
-
-            img.src = airSrc;
-            airlineName = airName;         
+            let airlineInfo = myAirlines[airlineCode] || myAirlines.default;
+            img.src = airlineInfo.src;
+            airlineName = airlineInfo.name;         
 
             logo.appendChild(img);
-            div.appendChild(logo);
+            div.appendChild(logo); //Prueba
 
             let flightTime = flight.departureAirport.time;
             flightDate = new Date(flightTime);
