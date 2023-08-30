@@ -46,7 +46,7 @@ header img{
     gap: 0.25rem;
     justify-content: center;
     padding: 30px;
-    width: 65%;
+    width: 100%;
     margin-left: auto;
     box-sizing: border-box;
     margin-right: auto;
@@ -128,10 +128,6 @@ a{
 
 .passenger-data {
     text-align: center;
-}
-
-.carousel-item{
-    height: 600px;
 }
 
 footer{
