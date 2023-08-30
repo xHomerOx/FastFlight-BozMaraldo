@@ -195,7 +195,7 @@ function compareFlights(matchedFlights) {
             };
 
             let airlineCode = airline.substring(0, 2);
-            ; 
+            
             let { src: airSrc, name: airName } = myAirlines[airlineCode] || myAirlines.default;
 
             img.src = airSrc;
@@ -203,6 +203,8 @@ function compareFlights(matchedFlights) {
 
             logo.appendChild(img);
             div.appendChild(logo);
+            
+
 
             let flightTime = flight.departureAirport.time;
             flightDate = new Date(flightTime);
@@ -233,12 +235,34 @@ function compareFlights(matchedFlights) {
         /* Selecciono mi vuelo deseado */
         let selectedOption = document.querySelectorAll('.BpkTicket_bpk-ticket');
 
-        selectedOption.forEach(selected => selected.addEventListener('click', function(event) {
+        selectedOption.forEach((selected, index) => selected.addEventListener('click', function(event) {
             event.preventDefault();
             selectedOption.forEach(unselected => unselected.removeAttribute('selected', 'selected'));
             selected.setAttribute('selected', 'selected');
 
-            userData(departureAirport, arrivalAirport, airlineName, flightDateEST);
+            mySelect = flightResults[index];
+
+            airlineCode = mySelect.flight_code;
+            airlineName = airlineCode.substring(0, 2);
+
+            switch (airlineName) {
+                case "AR":
+                    selectedAirline = aerolineas.name;
+                    break;
+                case "LA":
+                    selectedAirline = latam.name;
+                    break;
+                case "G3":
+                    selectedAirline = gol.name;
+                    break;
+                case "OB":
+                    selectedAirline = boliviana.name;
+                    break;
+                default:
+                    selectedAirline = flybondi.name;    
+            }
+
+            userData(mySelect.departureAirport.city, mySelect.arrivalAirport.city, selectedAirline, mySelect.departureAirport.time);
         }));  
 
     }else{
