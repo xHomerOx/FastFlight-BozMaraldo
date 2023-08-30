@@ -158,8 +158,6 @@ function compareFlights(matchedFlights) {
         const boliviana = new Airline("OB", "Boliviana de Aviación");
         const flybondi = new Airline("FO", "Flybondi");
 
-        let departureAirport, arrivalAirport, airlineName, flightDateEST;
-
         for (flight of flightResults) {
 
             let div = document.createElement('div');
