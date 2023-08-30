@@ -247,6 +247,9 @@ button, input, .carousel-indicators{
 }
 
 @media screen and (max-width: 768px) {
+    header img {
+        width: 200px;
+    }
     button, input, .carousel-indicators{
         width: 100%;
     }
