@@ -201,7 +201,7 @@ function compareFlights(matchedFlights) {
             airlineName = airlineInfo.name;         
 
             logo.appendChild(img);
-            div.appendChild(logo); //Prueba
+            div.appendChild(logo);
 
             let flightTime = flight.departureAirport.time;
             flightDate = new Date(flightTime);
